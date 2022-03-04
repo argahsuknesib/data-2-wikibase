@@ -1,4 +1,5 @@
 import pandas as pd
+import ntpath as nt
 import csv
 fileToUpload = "data/BIPOC/(1977) The Combahee River Collective Statement.pdf .xlsx"
 fileInCSV = "data/BIPOC/(1977) The Combahee River Collective Statement.pdf .csv"
@@ -24,6 +25,11 @@ def readingExcel():
                     line_count = line_count + 1
                 except Exception as e:
                     print('There has been an exception encountered, which is : ', e)
+
+def readingFile():
+    file_name = nt.basename(fileInCSV)
+    print(file_name[:-4])
+
 
 def main():
     readingExcel()
