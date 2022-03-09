@@ -1,5 +1,6 @@
 import csv
 import configparser
+from re import U
 from unittest import result
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -125,3 +126,89 @@ class CreateTriples:
 
         self.sparql.setQuery(query)
         self.sparql.setReturnFormat(JSON)
+        results = self.sparql.query().convert()
+        return results
+
+    def getItems(self):
+        pid = "P31"
+        params = {'action': 'wbgetentities', 'ids': pid}
+        request = self.wikibase._simple_request(**params)
+        results = request.query()
+        print(result["entities"][pid]["descriptions"])
+
+    def capitalseFirstLetter(self, word):
+        return word.capitalize()
+
+    def getClaim(self, item_id):
+        entity = pywikibot.ItemPage(self.wikibase_repo. item_id)
+        claims = entity.get(u'claims')
+        return claims
+
+    def importWikiDataConcept(self, wd_qid, wb_qid):
+        wikidata_item = pywikibot.ItemPage(self.wikidata_repo, wd_qid)
+        wikidata_item.get()
+        wikibase_item = pywikibot.ItemPage(self.wikibase_repo, wb_qid)
+        wikibase_item.get()
+        self.wikibase_importer.change_item_V2(
+            wikidata_item, True, wikibase_item
+        )
+
+        return wikibase_item
+
+    def linkWikidataItem(self, subject, qid):
+        data = {}
+        newClaims = []
+        wikidata_item = None
+        existing_item_id = self.getItemIdByWikidataQID(qid)
+        if(existing_item_id is not None):
+            wikidata_item = pywikibot.ItemPage(
+                self.wikibase_repo, existing_item_id
+            )
+            wikidata_item.get()
+
+        else:
+            wikidata_item = self.importWikiDataConcept(qid, subject.id)
+        property_result = self.getWikiItemSparql(
+            'Has wikidata substitute item'
+        )
+        property_id = property_result['results']['bindings'][0]['s']['value'].split(
+            "/"
+        )[-1]
+
+        property = pywikibot.PropertyPage(self.wikibase_repo, property_id)
+
+        existing_claims = self.getClaim(subject.id)
+        if u'' + property_id + '' in existing_claims[u'claims']:
+            pywikibot.output(u'Error: Already item has link to wikidata substitute item')
+            return subject
+        claim == pywikibot.Claim(self.wikibase_repo, property_id, datatype=property.type)
+        claim.setTarget(wikidata_item)
+        newClaims.append(claim.toJSON())
+        data['claims'] = newClaims
+        subject.editEntity(data)
+        return subject
+
+    def create_claim(self, subject_string, property_string, object_string, claims_hash, qualifier_prop=None, qualifier_target=None):
+        new_item = {}
+        newClaims = []
+        data = {}
+
+        subject_result = self.getWikiItemSparql(
+            self.capitalseFirstLetter(subject_string).rstrip()
+        )
+        subject_item = {}
+        subject_id = None
+
+        if (len(subject_result['results']['bindings']) > 0):
+            subject_uri = subject_result['results']['bindings'][0]['s']['value']
+            subject_id = subject_uri.split("/")[-1]
+            subject_item = pywikibot.ItemPage(self.wikibase_repo, subject_id)
+            subject_item.get()
+            print(subject_item.id)
+
+        else:
+            
+
+
+        
+
