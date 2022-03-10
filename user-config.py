@@ -1,4 +1,4 @@
-register_families_folder = ['./config']
+user_families_paths = ['./config']
 mylang = "wikidata"
 family = "wikidata"
 # usernames['my']['my'] = u'WikidataUpdater'
