@@ -51,11 +51,7 @@ class UploadItem():
                     glossary_class = pywikibot.ItemPage(self.wikibase_repo)
                     glossary_class.editLabels(labels={'en' : line['Label'].capitalize()}, summary='adding the main label to add the synonyms later')
                     glossary_class.editDescriptions(descriptions={'en':'This entity is a word from the glossary'})
-                    glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
-                    glossary_class.editAliases(aliases={'en': [line['alias2'].capitalize()]}, summary='adding the synonyms to the label')
-                    glossary_class.editAliases(aliases={'en': [line['alias3'].capitalize()]}, summary='adding the synonyms to the label')
-                    glossary_class.editAliases(aliases={'en': [line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
-
+                    glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(),line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
                         # if line['alias%d' % i] != '':
                         #     glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
                         # else:
