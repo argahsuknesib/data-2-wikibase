@@ -55,45 +55,47 @@ class UploadItem():
                         descriptions={'en': 'This entity is a word from the glossary'})
                     if (line['alias1'] == ''):
                         pass
-                    if (line['alias2'] == ''):
+                    elif (line['alias2'] == ''):
                         glossary_class.editAliases(aliases={'en': [
                                                    line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
-                    if (line['alias3'] == ''):
+                    elif (line['alias3'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(
                         ), line['alias2'].capitalize()]}, summary='adding the synonyms to the label')
-                    if (line['alias4'] == ''):
+                    elif (line['alias4'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
                         ), line['alias3'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias5'] == ''):
+                    elif(line['alias5'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
                         ), line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias6'] == ''):
+                    elif(line['alias6'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
                         ), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias7'] == ''):
+                    elif(line['alias7'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
                         ), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias8'] == ''):
+                    elif(line['alias8'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
                         ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias9'] == ''):
+                    elif(line['alias9'] == ''):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
                         ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias10' == '']):
+                    elif(line['alias10' == '']):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
                         ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias11' == '']):
+                    elif(line['alias11' == '']):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
                         ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias12' == '']):
+                    elif(line['alias12' == '']):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
                         ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias13' == '']):
+                    elif(line['alias13' == '']):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
                         ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize()]}, summary='adding the synonyms to the label')
-                    if(line['alias14' == '']):
+                    elif(line['alias14' == '']):
                         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(
                         ), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize()]}, summary='adding the synonyms to the label')
+                    else:
+                        pass
                     # for i in range(1,80):
                     #     if line['alias%d'%i] == '':
                     #         pass
