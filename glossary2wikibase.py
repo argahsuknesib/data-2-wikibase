@@ -55,7 +55,7 @@ class UploadItem():
                         if line['alias%d'%i] == '':
                             pass
                         else:
-                            glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(),line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
+                            glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(),line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
                         # if line['alias%d' % i] != '':
                         #     glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
                         # else:
