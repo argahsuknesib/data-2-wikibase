@@ -49,17 +49,61 @@ class UploadItem():
                 print(f'processing the glossary line {line_count}')
                 try:
                     glossary_class = pywikibot.ItemPage(self.wikibase_repo)
-                    glossary_class.editLabels(labels={'en' : line['Label'].capitalize()}, summary='adding the main label to add the synonyms later')
-                    glossary_class.editDescriptions(descriptions={'en':'This entity is a word from the glossary'})
-                    for i in range(1,80):
-                        if line['alias%d'%i] == '':
-                            pass
-                        else:
-                            glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(),line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
-                        # if line['alias%d' % i] != '':
-                        #     glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
-                        # else:
-                        #     pass
+                    glossary_class.editLabels(labels={'en': line['Label'].capitalize(
+                    )}, summary='adding the main label to add the synonyms later')
+                    glossary_class.editDescriptions(
+                        descriptions={'en': 'This entity is a word from the glossary'})
+                    if (line['alias1'] == ''):
+                        pass
+                    if (line['alias2'] == ''):
+                        glossary_class.editAliases(aliases={'en': [
+                                                   line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
+                    if (line['alias3'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(
+                        ), line['alias2'].capitalize()]}, summary='adding the synonyms to the label')
+                    if (line['alias4'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
+                        ), line['alias3'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias5'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
+                        ), line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias6'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
+                        ), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias7'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
+                        ), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias8'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
+                        ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias9'] == ''):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
+                        ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias10' == '']):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
+                        ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias11' == '']):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
+                        ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias12' == '']):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
+                        ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias13' == '']):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
+                        ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize()]}, summary='adding the synonyms to the label')
+                    if(line['alias14' == '']):
+                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(
+                        ), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize()]}, summary='adding the synonyms to the label')
+                    # for i in range(1,80):
+                    #     if line['alias%d'%i] == '':
+                    #         pass
+                    #     else:
+                    #         glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(),line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
+                    #     # if line['alias%d' % i] != '':
+                    #     #     glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
+                    #     # else:
+                    #     #     pass
+
                 except Exception as e:
                     print('The exception encountered is, ', e)
                 line_count = line_count + 1
