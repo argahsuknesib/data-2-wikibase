@@ -52,10 +52,12 @@ class UploadItem():
                     glossary_class.editLabels(labels={'en' : line['Label'].capitalize()}, summary='adding the main label to add the synonyms later')
                     glossary_class.editDescriptions(descriptions={'en':'This entity is a word from the glossary'})
                     for i in range(1, 80):
-                        if line['alias%d' % i] != '':
                             glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
-                        else:
-                            pass
+
+                        # if line['alias%d' % i] != '':
+                        #     glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize()]}, summary='adding the synonyms to the label')
+                        # else:
+                        #     pass
                 except Exception as e:
                     print('The exception encountered is, ', e)
                 line_count = line_count + 1
@@ -63,7 +65,7 @@ class UploadItem():
 
 def main():
     uploading_item = UploadItem(wikibase)
-    uploading_item.readCSV('data/glossary/DRPI-glossary.csv')
+    uploading_item.readCSV('data/glossary/DRPI-glossary-test.csv')
 
 
 if __name__ == '__main__':
