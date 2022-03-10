@@ -207,6 +207,7 @@ class CreateTriples:
             print(subject_item.id)
 
         else:
+            pass
             
 
 

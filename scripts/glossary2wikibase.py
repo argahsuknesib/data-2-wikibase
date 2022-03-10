@@ -53,8 +53,8 @@ class UploadItem():
                     )}, summary='adding the main label to add the synonyms later')
                     glossary_class.editDescriptions()
                     for i in range(1, 79):
-                        glossary_class.editAliases(aliases={line['alias%d' % i].capitalize(
-                        )}, summary='adding the synonyms to the label')
+                        glossary_class.editAliases(aliases={'en': [line['alias%d' % i].capitalize(
+                        )]}, summary='adding the synonyms to the label')
 
                 except Exception as e:
                     print('The exception encountered is, ', e)
