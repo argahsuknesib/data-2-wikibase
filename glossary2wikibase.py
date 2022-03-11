@@ -53,49 +53,79 @@ class UploadItem():
                     )}, summary='adding the main label to add the synonyms later')
                     glossary_class.editDescriptions(
                         descriptions={'en': 'This entity is a word from the glossary'})
-                    if (line['alias1'] == ''):
-                        pass
-                    elif (line['alias2'] == ''):
-                        glossary_class.editAliases(aliases={'en': [
-                                                   line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif (line['alias3'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(
-                        ), line['alias2'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif (line['alias4'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
-                        ), line['alias3'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias5'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(
-                        ), line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias6'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
-                        ), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias7'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(
-                        ), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias8'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
-                        ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias9'] == ''):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(
-                        ), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias10' == '']):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
-                        ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias11' == '']):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(
-                        ), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias12' == '']):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
-                        ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias13' == '']):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(
-                        ), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize()]}, summary='adding the synonyms to the label')
-                    elif(line['alias14' == '']):
-                        glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(
-                        ), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize()]}, summary='adding the synonyms to the label')
-                    else:
-                        pass
+                    
+                    """
+                    for one alias
+                    """
+                    #glossary_class.editAlias(aliases={'en' : [line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
+                    """
+                    for two alias
+                    """
+                    #glossary_class.editAlias(aliases={'en' : [line['alias1'].capitalize(), line['alias2'].capitalize()]}, summary='adding the synonyms to the label')
+                    """
+                    for three alias
+                    """    
+                    #glossary_class.editAlias(aliases={'en' : [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize()]}, summary = 'adding the synonyms to the label')
+                    """
+                    for four alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for five alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for six alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for seven alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for eight alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for nine alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for ten alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for eleven alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for twelve alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize() ]}, summary = 'adding the synonymns to the label')
+                    """
+                    for thirteen alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize() ]}, summary = 'adding the synonymns to the label')
+                    """
+                    for fourteen alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for fifteen alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for sixteen alias
+                    """
+                    #glossary_class.editAlias(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize(), line['alias16'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    """
+                    for twentyfour aliases
+                    """
+
+                    """
+                    for seventytwo alias
+                    """
+
                     # for i in range(1,80):
                     #     if line['alias%d'%i] == '':
                     #         pass
@@ -113,7 +143,25 @@ class UploadItem():
 
 def main():
     uploading_item = UploadItem(wikibase)
-    uploading_item.readCSV('data/glossary/DRPI-glossary-test.csv')
+    # uploading_item.readCSV('data/glossary/DRPI-glossary-test.csv')
+    uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-Label.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-OneAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwoAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ThreeAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FourAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FiveAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-SixAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-SevenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-EightAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-NineAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ElevenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwelveAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ThirteenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FourteenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FifteenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-SixTeenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ElevenAlias.csv')
 
 
 if __name__ == '__main__':
