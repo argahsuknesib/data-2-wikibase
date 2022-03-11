@@ -57,7 +57,7 @@ class UploadItem():
                     """
                     for one alias
                     """
-                    #glossary_class.editAlias(aliases={'en' : [line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
+                    glossary_class.editAlias(aliases={'en' : [line['alias1'].capitalize()]}, summary='adding the synonyms to the label')
                     """
                     for two alias
                     """
@@ -144,8 +144,8 @@ class UploadItem():
 def main():
     uploading_item = UploadItem(wikibase)
     # uploading_item.readCSV('data/glossary/DRPI-glossary-test.csv')
-    uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-Label.csv')
-    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-OneAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-Label.csv')
+    uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-OneAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwoAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ThreeAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FourAlias.csv')
