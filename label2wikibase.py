@@ -291,9 +291,8 @@ class UploadLabels():
             document_name = ntpath.basename(filePath)[0:-4]
             label = {}
             data = {}
-            label = {"labels", document_name.capitalize()}
-            description = {"description", "This document is titled " + document_name + " and is added to the disability wikibase"}
-
+            label = {"labels" : document_name.capitalize()}
+            description = {"description": "This document is titled " + document_name + " and is added to the disability wikibase"}
 
             wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
             if (not wiki_doc_item):
