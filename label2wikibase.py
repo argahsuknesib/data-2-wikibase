@@ -295,7 +295,6 @@ class UploadLabels():
             wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
             if (not wiki_doc_item):
                 return False
-            
         except Exception as e:
             print('The exception encountered is ', e)
 
@@ -321,8 +320,8 @@ class UploadLabels():
 
 def main():
     uploadingLabels = UploadLabels(wikibase)
-    uploadingLabels.UploadCSV2Wikibase(
-         "data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
+    UploadLabels.Upload2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
+    #uploadingLabels.UploadCSV2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
 
 
 if __name__ == '__main__':
