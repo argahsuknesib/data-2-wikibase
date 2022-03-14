@@ -1,4 +1,3 @@
-import csv
-from configWikibaseID import DevelopmentConfig
-
-print(DevelopmentConfig.HAS_TEXT_PROPERTY_PID)
+from pathlib import Path
+path = Path("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
+print(path.parent.absolute())

@@ -4,6 +4,7 @@ import configparser
 import ntpath
 from pydoc import doc
 from urllib import request
+from xml.dom.minidom import Document
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
 from configWikibaseID import ProductionConfig
@@ -106,7 +107,7 @@ class UploadLabels():
         else:
             return False
 
-    def createDocumentEntity(self, label, description, key, document_link, type):
+    def createDocumentEntity(self, label, description, key):
         search_result = self.searchWikiItem(
             self.capitaliseFirstLetter(key.rstrip()))
         is_exist = self.searchExactWikiItem(
@@ -134,15 +135,21 @@ class UploadLabels():
                 self.wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
             instance_claim.setTarget(document_class_entity)
 
-            document_uri_property = self.pywikibot.PropertyPage(
-                self.wikibase_repo, ProductionConfig.DOCUMENT_REFERENCE_URI_PROPERTY_PID)
-            document_uri_property.get()
-            document_uri_claim = self.pywikibot.Claim(
-                self.wikibase_repo, document_uri_property.id, datatype=document_uri_property.Type)
-            document_uri_claim.setTarget(document_link)
+
+            """
+            uncomment this code about document URI just in case you 
+            found a reason to add the actual link of the document.
+            """
+
+            # document_uri_property = self.pywikibot.PropertyPage(
+            #     self.wikibase_repo, ProductionConfig.DOCUMENT_REFERENCE_URI_PROPERTY_PID)
+            # document_uri_property.get()
+            # document_uri_claim = self.pywikibot.Claim(
+            #     self.wikibase_repo, document_uri_property.id, datatype=document_uri_property.Type)
+            # document_uri_claim.setTarget(document_link)
+            # new_claims.append(document_uri_claim.toJSON())
 
             new_claims.append(instance_claim.toJSON())
-            new_claims.append(document_uri_claim.toJSON())
             claim_data['claims'] = new_claims
             new_item.editEntity(claim_data, summary='Adding new claims')
 
@@ -279,6 +286,19 @@ class UploadLabels():
         else:
             return False
 
+    def Upload2Wikibase(self, filePath):
+        try:
+            document_name = ntpath.basename(filePath)[0:-4]
+            label = document_name.capitalize()
+            description = "This document is titled " + document_name + " and is added to the disability wikibase"
+
+            wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
+            if (not wiki_doc_item):
+                return False
+            
+        except Exception as e:
+            print('The exception encountered is ', e)
+
 
     def UploadCSV2Wikibase(self, filePath):
 
@@ -288,11 +308,12 @@ class UploadLabels():
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
             line_count = 0
+            doc_item = self.createDocumentEntity(label = label, description = description, key = fileName, document_link= None, type= None)
+            doc_item.get()
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
-                    doc_item = self.createDocumentEntity(label = label, description = description, key = fileName, document_link= None, type= None)
-                    doc_item.get()
+                    pass
                 except Exception as e:
                     print('The exception encountered is ',e)
                 line_count = line_count + 1
