@@ -298,10 +298,11 @@ class UploadLabels():
         wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
         if (not wiki_doc_item):
             return False
-
+        print('hi-1')
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter = ',')
             line_count = 0
+            print('hi-2')
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
@@ -321,11 +322,11 @@ class UploadLabels():
 
                     paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
                     paragraph_entity.get()
-
+                    print('hi-3')
                 except Exception as e:
                     print('The exception encountered is ', e)
                 line_count = line_count + 1
-
+        print('hi-4')
 
 
     def UploadCSV2Wikibase(self, filePath):
