@@ -1,0 +1,4 @@
+import csv
+from configWikibaseID import DevelopmentConfig
+
+print(DevelopmentConfig.HAS_TEXT_PROPERTY_PID)

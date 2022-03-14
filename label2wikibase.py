@@ -1,7 +1,12 @@
+from cgitb import text
 import csv
 import configparser
+import ntpath
+from pydoc import doc
+from urllib import request
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
+from configWikibaseID import ProductionConfig
 
 config = configparser.ConfigParser()
 config.read('config/application.config.ini')
@@ -12,50 +17,33 @@ site = pywikibot.Site()
 
 wikidata = pywikibot.Site("wikidata", "wikidata")
 
-class UploadLabel():
+
+class UploadLabels():
     def __init__(self, wikibase):
         self.wikibase = wikibase
         self.wikibase_repo = wikibase.data_repository()
         self.sparql = SPARQLWrapper(config.get('wikibase', 'sparqlEndPoint'))
         self.class_entities = {}
         self.properties = {}
+        self.pywikibot = pywikibot
 
     def capitaliseFirstLetter(self, word):
         return word.capitalize()
 
-    def get_class_entity(self):
-        labels = ["Document", "Topic", "Wikidata", "Paragraph", "Disability rights wiki"]
-        for label in labels:
-            object_result = self.getWikiItemSparql(
-                self.capitaliseFirstLetter(label).rstrip()
-            )
-            if (len(object_result['results']['bindings']) > 0):
-                object_uri = object_result['results']['bindings'][0]['s']['value']
-                object_id = object_uri.split("/")[-1]
-                object_item = pywikibot.ItemPage(self.wikibase_repo, object_id)
-                object_item.get()
-                self.class_entities[label] = object_item
-                print(object_id)
+    def searchItem(self, label):
+        if label is None:
+            return False
+        params = {'action': 'wbsearchentities', 'format': 'json',
+                  'language': 'en', 'type': 'item', 'limit': 100, 'search': label}
+        request = self.wikibase._simple_request(**params)
+        result = request.submit()
+        return result
 
-        prop_labels = ["instance of", "part of", "has subtopic"]
-        for p_label in prop_labels:
-            property_result = self.getWikiItemSparql(p_label.rstrip().lstrip().lower())
-            property_item = {}
-            property_id = None
-
-            if(len(property_result['results']['bindings']) > 0):
-                property_uri = property_result['results']['bindings'][0]['s']['value']
-                property_id = property_uri.split("/")[-1]
-                property_item = pywikibot.PropertyPage(
-                    self.wikibase_repo, property_id
-                )
-                property_item.get()
-                self.properties[p_label] = property_item
-
-    def searchWikiItem(self, label):
+    def searchExactWikiItem(self, label):
         if label is None:
             return True
-        params = {'action':'wbsearchentities', 'format':'json', 'language':'en', 'type':'item', 'search':label}
+        params = {'action': 'wbsearchentities', 'format': 'json',
+                  'language': 'en', 'type': 'item', 'limit': 1, 'search': label}
         request = self.wikibase._simple_request(**params)
         result = request.submit()
         print(result)
@@ -65,38 +53,256 @@ class UploadLabel():
                     return True
         return False
 
-    def getWikiItemSparql(self, label):
+    def searchWikiItem(self, label):
         query = """
-            select ?label ?s where
+            select ?label ?s where 
             {
                 ?s ?p ?o.
-                ?s rdfs:label ?label .
-                FILTER(lang(?label)='fr') || lang(?label)='en')
-                FILTER(?label = '""" + label + """'@en)
+                ?s rdfs:label ?label.
+                FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
+                FILTER(?label = '  """ + label + """ ')
             }
         """
+
         self.sparql.setQuery(query)
         self.sparql.setReturnFormat(JSON)
         results = self.sparql.query().convert()
-        return results
+        if (len(results['results']['bindings']) > 0):
+            return True
+        else:
+            return False
 
-    def createItem(self, label, description, key, entity_list):
-        if (self.capitaliseFirstLetter(key.rstrip()) in entity_list):
-            return entity_list
-        entity = self.getWikiItemSparql(self.capitaliseFirstLetter(key.rstrip()))
-        isExistAPI = self.searchWikiItem(self.capitaliseFirstLetter(key.rstrip()))
-        if (len(entity['results']['bindings'] == 0 and not isExistAPI)):
+    def getItemByAlias(self, label):
+        query = """
+        
+            SELECT DISTINCT ?label ?s where 
+            {
+                ?s ?p ?o;
+                skos:altLabel ?label.
+                FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
+                FILTER(?label = '  """ + label + """ ')
+            }
+        """
+
+        self.sparql.setQuery(query)
+        self.sparql.setReturnFormat(JSON)
+        results = self.sparql.query().convert()
+
+        if (results.get('results', None) is not None and results.get('results').get('bindings') is not None
+                and type(results.get('results').get('bindings')) is list and len(results.get('results').get('bindings')) > 0
+                and results.get('results').get('bindings')[0] is not None and
+                results.get('results').get('bindings')[
+                0].get('s', None) is not None
+                and results.get('results').get('bindings')[0].get('s').get('value', None) is not None
+                ):
+
+            item_qid = results['results']['bindings'][0]['s']['value'].split(
+                "/")[-1]
+            if (item_qid):
+                item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
+                return item
+            else:
+                return False
+        else:
+            return False
+
+    def createDocumentEntity(self, label, description, key, document_link, type):
+        search_result = self.searchWikiItem(
+            self.capitaliseFirstLetter(key.rstrip()))
+        is_exist = self.searchExactWikiItem(
+            self.capitaliseFirstLetter(key.rstrip()))
+
+        if (not search_result and not is_exist):
             data = {}
-            print(f"inserting concept {key.rstrip()}")
+            print(f'inserting document entity {key.rstrip()}')
             data['labels'] = label
             data['descriptions'] = description
             new_item = pywikibot.ItemPage(self.wikibase_repo)
-            new_item.editEntity(data)
-            
+            new_item.editEntity(data, summary='Creating new item')
+
+            new_claims = []
+            claim_data = {}
+
+            instance_claim = {}
+            document_class_entity = self.pywikibot.ItemPage(
+                self.wikibase_repo, ProductionConfig.DOCUMENT_CLASS_QID)
+            document_class_entity.get()
+            instance_of_property = self.pywikibot.PropertyPage(
+                self.wikibase_repo, ProductionConfig.INSTACE_OF_PROPERTY_PID)
+            instance_of_property.get()
+            instance_claim = self.pywikibot.Claim(
+                self.wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
+            instance_claim.setTarget(document_class_entity)
+
+            document_uri_property = self.pywikibot.PropertyPage(
+                self.wikibase_repo, ProductionConfig.DOCUMENT_REFERENCE_URI_PROPERTY_PID)
+            document_uri_property.get()
+            document_uri_claim = self.pywikibot.Claim(
+                self.wikibase_repo, document_uri_property.id, datatype=document_uri_property.Type)
+            document_uri_claim.setTarget(document_link)
+
+            new_claims.append(instance_claim.toJSON())
+            new_claims.append(document_uri_claim.toJSON())
+            claim_data['claims'] = new_claims
+            new_item.editEntity(claim_data, summary='Adding new claims')
+
+            return new_item
+        else:
+            entity = self.searchWikiItem(
+                self.capitaliseFirstLetter(key.rstrip()))
+            return entity
+
+    def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
+        topic_entity = {}
+        search_result = self.searchWikiItem(
+            self.capitaliseFirstLetter(topic.rstrip()))
+        is_exist = self.searchExactWikiItem(
+            self.capitaliseFirstLetter(topic.rstrip()))
+        if(not search_result and not is_exist):
+            """checking for the alias name of the topic if it exists or not"""
+            is_alias_exist = self.getItemByAlias(
+                self.capitaliseFirstLetter(topic.rstrip()))
+            if (not is_alias_exist):
+                """" creating topic if there is none already """
+                data = {}
+                label = {lang: topic.capitalize().strip()}
+                description = {lang: topic.capitalize().strip() + "entity"}
+                data['labels'] = label
+                data['descriptions'] = description
+                topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+                topic_entity.editEntity(data, summary='Creating new item')
+            else:
+                """getting the topic by alias"""
+                topic_entity = self.getItemByAlias(
+                    self.capitaliseFirstLetter(topic.rstrip()))
+                topic_entity.get()
+
+        else:
+            topic_entity = self.getItemByAlias(
+                self.capitaliseFirstLetter(topic.rstrip()))
+            topic_entity.get()
+
+        if (topic_entity):
+            """ mentioned in """
+            mentioned_in_property = self.pywikibot.PropertyPage(
+                self.wikibase_repo, ProductionConfig.MENTIONED_IN_PROPERTY_PID)
+            mentioned_in_property.get()
+            mentioned_in_claim = self.pywikibot.Claim(
+                self.wikibase_repo, mentioned_in_property.id, datatype=mentioned_in_property.Type)
+            paragraph_entity.get()
+            mentioned_in_claim.setTarget(paragraph_entity)
+            topic_entity.addClaim(mentioned_in_claim,
+                                  summary='Adding new claim')
+            return topic_entity
+
+        else:
+            return False
+
+    def createParagraphEntity(self, label, description, text, document_entity, sub_topics, lang):
+
+        data = {}
+        print(f'inserting paragraph entity')
+        data['labels'] = label
+        data['descriptions'] = description
+        paragraph_item = pywikibot.ItemPage(self.wikibase_repo)
+        paragraph_item.editEntity(data, summary='Creating new item')
+
+        """
+        instance of
+        """
+        paragraph_class_entity = self.pywikibot.ItemPage(
+            self.wikibase_repo, ProductionConfig.PARAGRAPH_CLASS_QID)
+        paragraph_class_entity.get()
+        instance_of_property = self.pywikibot.PropertyPage(
+            self.wikibase_repo, ProductionConfig.INSTACE_OF_PROPERTY_PID)
+        instance_of_property.get()
+        instance_claim = self.pywikibot.Claim(
+            self.wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
+        instance_claim.setTarget(paragraph_class_entity)
+        paragraph_item.addClaim(
+            instance_claim, summary='Adding claim to the paragraph')
+
+        """
+        part of
+        """
+        part_of_property = self.pywikibot.PropertyPage(
+            self.wikibase_repo, ProductionConfig.PART_OF_PROPERTY_PID)
+        part_of_property.get()
+        part_of_claim = self.pywikibot.Claim(
+            self.wikibase_repo, part_of_property.id, datatype=part_of_property.Type)
+        part_of_claim.setTarget(document_entity)
+        paragraph_item.addClaim(
+            part_of_claim, summary='Adding claim to the paragraph')
+
+        """
+        has text
+        """
+
+        has_text_property = self.pywikibot.PropertyPage(
+            self.wikibase_repo, ProductionConfig.HAS_TEXT_PROPERTY_PID)
+        has_text_property.get()
+        has_text_claim = self.pywikibot.Claim(
+            self.wikibase_repo, has_text_property.id, datatype=has_text_property.Type)
+        has_text_claim.setTarget(text)
+        paragraph_item.addClaim(
+            has_text_claim, summary='Adding claim to the paragraph')
+
+        if (paragraph_item):
+
+            """ for sub topics """
+            for sub_topic in sub_topics:
+                topic_entity = self.create_sub_topic(
+                    sub_topic.label, paragraph_item, document_entity, lang)
+                topic_entity.get()
+
+                if (topic_entity):
+                    has_topic_property = self.pywikibot.PropertyPage(
+                        self.wikibase_repo, ProductionConfig.HAS_TOPIC_PROPERTY_PID)
+                    has_topic_property.get()
+                    has_topic_claim = self.pywikibot.Claim(
+                        self.wikibase_repo, has_topic_property.id, datatype=has_topic_property.Type)
+                    has_topic_claim.setTarget(topic_entity)
+                    paragraph_item.addClaim(
+                        has_topic_claim, summary='Adding claim to the paragraph')
+
+            has_paragraph_property = self.pywikibot.PropertyPage(
+                self.wikibase_repo, ProductionConfig.HAS_PARAGRAPH_PROPERTY_PID)
+            has_paragraph_property.get()
+            has_paragraph_claim = self.pywikibot.Claim(
+                self.wikibase_repo, has_paragraph_property.id, datatype=has_paragraph_property.Type)
+            has_paragraph_claim.setTarget(paragraph_item)
+            document_entity.addClaim(
+                has_paragraph_claim, summary='Adding caim to the document')
+
+            return paragraph_item
+
+        else:
+            return False
 
 
+    def UploadCSV2Wikibase(self, filePath):
 
-    def readCSVasDictionary(self, filePath):
+        fileName = ntpath.basename(filePath)[0:-4]
+        label = {fileName.capitalize()}
+        description = "This file has origin from Black Disability"
         with open(filePath, 'r') as csv_file:
-            csv_reader = csv.DictReader(csv_file, delimiter = ',')
+            csv_reader = csv.DictReader(csv_file, delimiter=',')
+            line_count = 0
+            for line in csv_reader:
+                print(f'currently on the line {line_count}')
+                try:
+                    doc_item = self.createDocumentEntity(label = label, description = description, key = fileName, document_link= None, type= None)
+                    doc_item.get()
+                except Exception as e:
+                    print('The exception encountered is ',e)
+                line_count = line_count + 1
 
+
+def main():
+    uploadingLabels = UploadLabels(wikibase)
+    uploadingLabels.UploadCSV2Wikibase(
+         "data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
+
+
+if __name__ == '__main__':
+    main()

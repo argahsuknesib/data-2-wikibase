@@ -6,9 +6,6 @@ name = "pypi"
 [packages]
 pywikibot = "*"
 wikitextparser = "*"
-pandas = "*"
-openpyxl = "*"
-logger = "*"
 sparqlwrapper = "*"
 
 [dev-packages]

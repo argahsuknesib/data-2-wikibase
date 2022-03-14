@@ -3,8 +3,8 @@ import ntpath
 
 
 fileToRead = "data/Black-Disability/Working definition of ableism word.pdf .xlsx"
-fileName = ntpath.basename(fileToRead)
-fileTitle = fileName[0:-10]
+fileName = ntpath.basename(fileToRead)[0:-10]
+print(fileName)
 
 
 read_file = pd.read_excel(fileToRead)
