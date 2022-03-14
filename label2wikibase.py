@@ -292,35 +292,38 @@ class UploadLabels():
         data = {}
         language_code = 'en'
         label = {language_code : document_name.capitalize()}
-        description_text = "This document is titled " + document_name + " and is added to the disability wikibase"
+        description_text = "This document titled " + document_name + " and is added to the disability wikibase"
         description = {language_code: description_text}
 
         wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
         if (not wiki_doc_item):
             return False
 
-        # with open(filePath, 'r') as csv_file:
-        #     csv_reader = csv.DictReader(csv_file, delimiter = ',')
-        #     line_count = 0
-        #     for line in csv_reader:
-        #         print(f'currently on the line {line_count}')
-        #         try:
-        #             paragraph_label = {language_code : f"{document_name.capitalize()} paragraph number {line_count}"}
-        #             paragraph_description = {language_code : f"Paragraph from {document_name.capitalize()} document"}
-        #             paragraph_text = line['Paragraph']
-        #             paragraph_topics = []
-        #             for i in range(1, 15):
-        #                 if(line[f'Label {i}']) != "":
-        #                     paragraph_topics.append(line[f'Label {i}'].capitalize())
-        #                 else:
-        #                     pass
-        #             paragraph_subtopics = {language_code : paragraph_topics}
+        with open(filePath, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file, delimiter = ',')
+            line_count = 0
+            for line in csv_reader:
+                print(f'currently on the line {line_count}')
+                try:
 
-        #             paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
+                    paragraph_label_value =  f"{document_name.capitalize()} paragraph number {line_count}"
+                    paragraph_description_value =  f"Paragraph from {document_name.capitalize()} document"
+                    paragraph_label = {language_code : paragraph_label_value}
+                    paragraph_description = {language_code : paragraph_description_value}
+                    paragraph_text = line['Paragraph']
+                    paragraph_topics = []
+                    for i in range(1, 15):
+                        if(line[f'Label {i}']) != "":
+                            paragraph_topics.append(line[f'Label {i}'].capitalize())
+                        else:
+                            pass
+                    paragraph_subtopics = {language_code : paragraph_topics}
 
-        #         except Exception as e:
-        #             print('The exception encountered is ', e)
-        #         line_count = line_count + 1
+                    paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
+
+                except Exception as e:
+                    print('The exception encountered is ', e)
+                line_count = line_count + 1
 
 
 
