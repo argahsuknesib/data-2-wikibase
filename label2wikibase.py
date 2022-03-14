@@ -118,7 +118,7 @@ class UploadLabels():
             print(f'inserting document entity {key.rstrip()}')
             data['labels'] = label
             data['descriptions'] = description
-            new_item = pywikibot.ItemPage(self.wikibase_repo)
+            new_item = self.pywikibot.ItemPage(self.wikibase_repo)
             new_item.editEntity(data, summary='Creating new item')
 
             new_claims = []
@@ -211,7 +211,7 @@ class UploadLabels():
         print(f'inserting paragraph entity')
         data['labels'] = label
         data['descriptions'] = description
-        paragraph_item = pywikibot.ItemPage(self.wikibase_repo)
+        paragraph_item = self.pywikibot.ItemPage(self.wikibase_repo)
         paragraph_item.editEntity(data, summary='Creating new item')
 
         """
