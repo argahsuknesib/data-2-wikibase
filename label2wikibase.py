@@ -320,7 +320,7 @@ class UploadLabels():
 
 def main():
     uploadingLabels = UploadLabels(wikibase)
-    UploadLabels.Upload2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
+    uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
     #uploadingLabels.UploadCSV2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
 
 
