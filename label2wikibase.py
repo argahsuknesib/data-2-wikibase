@@ -289,8 +289,8 @@ class UploadLabels():
     def Upload2Wikibase(self, filePath):
         try:
             document_name = ntpath.basename(filePath)[0:-4]
-            label = document_name.capitalize()
-            description = "This document is titled " + document_name + " and is added to the disability wikibase"
+            label = {document_name.capitalize()}
+            description = {"This document is titled " + document_name + " and is added to the disability wikibase"}
 
             wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
             if (not wiki_doc_item):
