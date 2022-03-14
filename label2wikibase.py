@@ -218,10 +218,10 @@ class UploadLabels():
         instance of
         """
         paragraph_class_entity = self.pywikibot.ItemPage(
-            self.wikibase_repo, ProductionConfig.PARAGRAPH_CLASS_QID)
+            self.wikibase_repo, f'{ProductionConfig.PARAGRAPH_CLASS_QID}')
         paragraph_class_entity.get()
         instance_of_property = self.pywikibot.PropertyPage(
-            self.wikibase_repo, ProductionConfig.INSTACE_OF_PROPERTY_PID)
+            self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
         instance_of_property.get()
         instance_claim = self.pywikibot.Claim(
             self.wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
@@ -233,7 +233,7 @@ class UploadLabels():
         part of
         """
         part_of_property = self.pywikibot.PropertyPage(
-            self.wikibase_repo, ProductionConfig.PART_OF_PROPERTY_PID)
+            self.wikibase_repo, f'{ProductionConfig.PART_OF_PROPERTY_PID}')
         part_of_property.get()
         part_of_claim = self.pywikibot.Claim(
             self.wikibase_repo, part_of_property.id, datatype=part_of_property.Type)
@@ -246,7 +246,7 @@ class UploadLabels():
         """
 
         has_text_property = self.pywikibot.PropertyPage(
-            self.wikibase_repo, ProductionConfig.HAS_TEXT_PROPERTY_PID)
+            self.wikibase_repo, f'{ProductionConfig.HAS_TEXT_PROPERTY_PID}')
         has_text_property.get()
         has_text_claim = self.pywikibot.Claim(
             self.wikibase_repo, has_text_property.id, datatype=has_text_property.Type)
@@ -264,7 +264,7 @@ class UploadLabels():
 
                 if (topic_entity):
                     has_topic_property = self.pywikibot.PropertyPage(
-                        self.wikibase_repo, ProductionConfig.HAS_TOPIC_PROPERTY_PID)
+                        self.wikibase_repo, f'{ProductionConfig.HAS_TOPIC_PROPERTY_PID}')
                     has_topic_property.get()
                     has_topic_claim = self.pywikibot.Claim(
                         self.wikibase_repo, has_topic_property.id, datatype=has_topic_property.Type)
@@ -273,7 +273,7 @@ class UploadLabels():
                         has_topic_claim, summary='Adding claim to the paragraph')
 
             has_paragraph_property = self.pywikibot.PropertyPage(
-                self.wikibase_repo, ProductionConfig.HAS_PARAGRAPH_PROPERTY_PID)
+                self.wikibase_repo, f'{ProductionConfig.HAS_PARAGRAPH_PROPERTY_PID}')
             has_paragraph_property.get()
             has_paragraph_claim = self.pywikibot.Claim(
                 self.wikibase_repo, has_paragraph_property.id, datatype=has_paragraph_property.Type)
