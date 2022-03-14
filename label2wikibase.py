@@ -296,8 +296,8 @@ class UploadLabels():
         description = {language_code: description_text}
 
         wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
-        if (not wiki_doc_item):
-            return False
+        # if (not wiki_doc_item):
+        #     return False
         print('hi-1')
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter = ',')
