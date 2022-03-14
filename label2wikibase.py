@@ -126,10 +126,10 @@ class UploadLabels():
 
             instance_claim = {}
             document_class_entity = self.pywikibot.ItemPage(
-                self.wikibase_repo, ProductionConfig.DOCUMENT_CLASS_QID)
+                self.wikibase_repo, f'{ProductionConfig.DOCUMENT_CLASS_QID}')
             document_class_entity.get()
             instance_of_property = self.pywikibot.PropertyPage(
-                self.wikibase_repo, ProductionConfig.INSTACE_OF_PROPERTY_PID)
+                self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
             instance_of_property.get()
             instance_claim = self.pywikibot.Claim(
                 self.wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
