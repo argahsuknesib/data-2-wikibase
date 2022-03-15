@@ -259,7 +259,7 @@ class UploadLabels():
             """ for sub topics """
             for sub_topic in sub_topics:
                 topic_entity = self.create_sub_topic(
-                    sub_topic.label, paragraph_item, document_entity, lang)
+                    sub_topic, paragraph_item, document_entity, lang)
                 topic_entity.get()
 
                 if (topic_entity):
@@ -288,8 +288,6 @@ class UploadLabels():
 
     def Upload2Wikibase(self, filePath):
         document_name = ntpath.basename(filePath)[0:-4]
-        label = {}
-        data = {}
         language_code = 'en'
         label = {language_code : document_name.capitalize()}
         description_text = "This document titled " + document_name + " and is added to the disability wikibase"
