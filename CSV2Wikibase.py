@@ -200,7 +200,7 @@ def createParagraphEntity(label, description, text, document_entity, sub_topics,
     print(f'inserting paragraph entity')
     data['labels'] = label
     data['descriptions'] = description
-    paragraph_item = pywikibot.ItemPage(self.wikibase_repo)
+    paragraph_item = pywikibot.ItemPage(wikibase_repo)
     paragraph_item.editEntity(data, summary='Creating new item')
 
     """
@@ -211,7 +211,7 @@ def createParagraphEntity(label, description, text, document_entity, sub_topics,
     paragraph_class_entity.get()
     instance_of_property = pywikibot.PropertyPage(wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
     instance_of_property.get()
-    instance_claim = self.pywikibot.Claim(wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
+    instance_claim = pywikibot.Claim(wikibase_repo, instance_of_property.id, datatype=instance_of_property.Type)
     instance_claim.setTarget(paragraph_class_entity)
     paragraph_item.addClaim(
         instance_claim, summary='Adding claim to the paragraph')
