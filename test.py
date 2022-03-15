@@ -11,10 +11,12 @@ with open(filePath, 'r') as csv_file:
             paragraph_text = line['Paragraph']
             paragraph_labels = []
 
+            print(type(line['Paragraph']))
+
             for i in range(1, 15):
                 if(line[f'Label {i}']) != "":
                     paragraph_labels.append(line[f'Label {i}'].capitalize())
-            print(paragraph_labels)
+            # print(paragraph_labels)
 
 
         except Exception as e:
