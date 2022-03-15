@@ -73,6 +73,25 @@ class UploadLabels():
         else:
             return False
 
+
+    def getWikiItem(self, label):
+        query = """
+            select ?label ?s where 
+            {
+                ?s ?p ?o.
+                ?s rdfs:label ?label.
+                FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
+                FILTER(?label = ' """ + label + """ ')
+            }
+        """
+        
+        self.sparql.setQuery(query)
+        self.sparql.setReturnFormat(JSON)
+        results = self.sparql.query().convert()
+        item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+        return item_qid
+
+
     def getItemByAlias(self, label):
         query = """
         
@@ -173,7 +192,7 @@ class UploadLabels():
                 """" creating topic if there is none already """
                 data = {}
                 label = {lang: topic.capitalize().strip()}
-                description = {lang: topic.capitalize().strip() + "entity"}
+                description = {lang: topic.capitalize().strip() + " entity"}
                 data['labels'] = label
                 data['descriptions'] = description
                 topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
@@ -182,12 +201,12 @@ class UploadLabels():
                 """getting the topic by alias"""
                 topic_entity = self.getItemByAlias(
                     self.capitaliseFirstLetter(topic.rstrip()))
-                topic_entity.get()
+                # topic_entity.get()
 
         else:
             topic_entity = self.getItemByAlias(
                 self.capitaliseFirstLetter(topic.rstrip()))
-            topic_entity.get()
+            # topic_entity.get()
 
         if (topic_entity):
             """ mentioned in """
