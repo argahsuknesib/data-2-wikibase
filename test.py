@@ -11,7 +11,8 @@ with open(filePath, 'r') as csv_file:
             paragraph_text = line['Paragraph']
             paragraph_labels = []
 
-            print(type(line['Paragraph']))
+            print(type(paragraph_text))
+            print(paragraph_text.strip())
 
             for i in range(1, 15):
                 if(line[f'Label {i}']) != "":

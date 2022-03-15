@@ -310,7 +310,7 @@ class UploadLabels():
                     paragraph_description_value =  f"Paragraph from {document_name.capitalize()} document"
                     paragraph_label = {language_code : paragraph_label_value}
                     paragraph_description = {language_code : paragraph_description_value}
-                    paragraph_text = line['Paragraph']
+                    paragraph_text = line['Paragraph'].strip()
                     paragraph_topics = []
                     for i in range(1, 15):
                         if(line[f'Label {i}']) != "":
