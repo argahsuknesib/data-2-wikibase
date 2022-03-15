@@ -313,15 +313,15 @@ class UploadLabels():
                     paragraph_text_value = line['Paragraph']
                     paragraph_text = {language_code : paragraph_text_value}
                     paragraph_topics = []
-                    # for i in range(1, 15):
-                    #     if(line[f'Label {i}']) != "":
-                    #         paragraph_topics.append(line[f'Label {i}'].capitalize())
-                    #     else:
-                    #         pass
+                    for i in range(1, 15):
+                        if(line[f'Label {i}']) != "":
+                            paragraph_topics.append(line[f'Label {i}'].capitalize())
+                        else:
+                            pass
                     paragraph_subtopics = {language_code : paragraph_topics}
 
-                    paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
-                    paragraph_entity.get()
+                    # paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
+                    # paragraph_entity.get()
                     print('hi-3')
                 except Exception as e:
                     print('The exception encountered is ', e)
