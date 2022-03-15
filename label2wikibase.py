@@ -322,6 +322,8 @@ class UploadLabels():
 
                     # paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
                     # paragraph_entity.get()
+                    print('This is paragraph subtopics,', paragraph_subtopics)
+                    print('This is paragraph text', paragraph_text)
                     print('hi-3')
                 except Exception as e:
                     print('The exception encountered is ', e)
