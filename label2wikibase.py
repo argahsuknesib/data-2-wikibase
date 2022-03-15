@@ -315,7 +315,7 @@ class UploadLabels():
                             paragraph_topics.append(line[f'Label {i}'].capitalize())
                         else:
                             pass
-                    paragraph_subtopics = {language_code : paragraph_topics}
+                    paragraph_subtopics = paragraph_topics
 
                     paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
                     # paragraph_entity.get()
