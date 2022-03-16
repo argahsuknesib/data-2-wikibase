@@ -97,7 +97,7 @@ class UploadLabels():
             {
                 ?s ?p ?o;
                     skos:altLabel ?label .
-                FILTER(lang(?label)='fr') || lang(?label)='en')
+                FILTER(lang(?label)='fr' || lang(?label)='en')
                 FILTER(?label = '""" + label + """' @en)
             }
         
