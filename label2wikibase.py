@@ -218,16 +218,15 @@ class UploadLabels():
                 topic_entity.editEntity(data, summary='Creating new item')
             else:
                 """getting the topic by alias"""
+                topic_entity = {}
                 topic_entity = self.getItemByAlias(
                     self.capitaliseFirstLetter(topic.rstrip()))
-                topic_entity.get()
 
         else:
-
+            topic_entity = {}
             topic_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
             if (topic_exist is True):
                 topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-                topic_entity.get()
 
         if (topic_entity):
             """ mentioned in """
