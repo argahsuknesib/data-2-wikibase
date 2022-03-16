@@ -3,11 +3,14 @@ import csv
 import configparser
 import ntpath
 from pydoc import doc
+import sys
+import traceback
 from urllib import request
 from xml.dom.minidom import Document
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
 from configWikibaseID import ProductionConfig
+from logger import DebugLogger
 
 config = configparser.ConfigParser()
 config.read('config/application.config.ini')
@@ -27,6 +30,7 @@ class UploadLabels():
         self.class_entities = {}
         self.properties = {}
         self.pywikibot = pywikibot
+
 
     def capitaliseFirstLetter(self, word):
         return word.capitalize()
@@ -362,7 +366,14 @@ class UploadLabels():
                     # print('This is paragraph text', paragraph_text)
                     # print('hi-3')
                 except Exception as e:
-                    print('The exception encountered is ', e)
+                    # print('The exception encountered is ', e)
+                    err_msg = f"ERROR : {line[0].rstrip()} Row count: {line_count}"
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    tb = traceback.extract_tb(exc_tb)[-1]
+                    err_trace = f"ERROR_TRACE >>>: + {exc_type} , method: {tb[2]} , line-no: {tb[1]}"
+                    logger = DebugLogger()
+                    logger.logError('Error in: ', e, exc_type,exc_obj, exc_tb, tb, err_msg)
+
                 line_count = line_count + 1
         # print('hi-4')
 
