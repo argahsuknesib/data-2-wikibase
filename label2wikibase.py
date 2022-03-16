@@ -91,6 +91,25 @@ class UploadLabels():
         item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
         return item_qid
 
+    def searchItemByAlias(self, label):
+        query = """
+            SELECT DISTINCT ?s ?label where
+            {
+                ?s ?p ?o;
+                    skos:altLabel ?label .
+                FILTER(lang(?label)='fr') || lang(?label)='en')
+                FILTER(?label = '""" + label + """' @en)
+            }
+        
+        """
+        self.sparql.setQuery(query)
+        self.sparql.setReturnFormat(JSON)
+        results = self.sparql.query().convert()
+        if (len(results['results']['bindings']) > 0):
+            return True
+        else:
+            return False
+
 
     def getItemByAlias(self, label):
         query = """
@@ -100,7 +119,7 @@ class UploadLabels():
                 ?s ?p ?o;
                 skos:altLabel ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '  """ + label + """ ')
+                FILTER(?label = '""" + label + """')
             }
         """
 
@@ -201,12 +220,14 @@ class UploadLabels():
                 """getting the topic by alias"""
                 topic_entity = self.getItemByAlias(
                     self.capitaliseFirstLetter(topic.rstrip()))
-                # topic_entity.get()
+                topic_entity.get()
 
         else:
-            topic_entity = self.getItemByAlias(
-                self.capitaliseFirstLetter(topic.rstrip()))
-            # topic_entity.get()
+
+            topic_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+            if (topic_exist is True):
+                topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+                topic_entity.get()
 
         if (topic_entity):
             """ mentioned in """
