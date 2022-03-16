@@ -10,7 +10,6 @@ from xml.dom.minidom import Document
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
 from configWikibaseID import ProductionConfig
-from logger import DebugLogger
 
 config = configparser.ConfigParser()
 config.read('config/application.config.ini')
