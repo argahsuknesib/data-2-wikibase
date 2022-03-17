@@ -122,7 +122,7 @@ class UploadLabels():
                 ?s ?p ?o
                 ?s rdfs:label ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = "  """ + label + """  ")
+                FILTER(?label = " """ + label + """ "@en)
             }
         """
 
