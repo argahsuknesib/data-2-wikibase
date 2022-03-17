@@ -201,6 +201,7 @@ class UploadLabels():
             return entity
 
     def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
+        topic_entity = {}
         search_result = self.searchWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
         is_exist = self.searchExactWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
         is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
