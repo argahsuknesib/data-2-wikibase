@@ -64,7 +64,7 @@ class UploadLabels():
                 ?s ?p ?o.
                 ?s rdfs:label ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '  """ + label + """ ')
+                FILTER(?label = "  """ + label + """ ")
             }
         """
 
@@ -84,7 +84,7 @@ class UploadLabels():
                 ?s ?p ?o.
                 ?s rdfs:label ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = ' """ + label + """ ')
+                FILTER(?label = " """ + label + """ ")
             }
         """
         
@@ -101,7 +101,7 @@ class UploadLabels():
                 ?s ?p ?o;
                     skos:altLabel ?label .
                 FILTER(lang(?label)='fr' || lang(?label)='en')
-                FILTER(?label = '""" + label + """' @en)
+                FILTER(?label = " """ + label + """ " @en)
             }
         
         """
@@ -122,7 +122,7 @@ class UploadLabels():
                 ?s ?p ?o;
                 skos:altLabel ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '""" + label + """')
+                FILTER(?label = " """ + label + """ ")
             }
         """
 
@@ -210,7 +210,11 @@ class UploadLabels():
             """checking for the alias name of the topic if it exists or not"""
             is_alias_exist = self.getItemByAlias(
                 self.capitaliseFirstLetter(topic.rstrip()))
-            if (not is_alias_exist):
+
+            if (type(is_alias_exist) == dict):
+                """ creating adding that topic into the subtopic list """
+                topic_entity.editEntity(is_alias_exist, summary = 'adding the existing alias into the wikibase')
+            elif (not is_alias_exist):
                 """" creating topic if there is none already """
                 data = {}
                 label = {lang: topic.capitalize().strip()}
