@@ -218,14 +218,6 @@ class UploadLabels():
             found a reason to add the actual link of the document.
             """
 
-            # document_uri_property = self.pywikibot.PropertyPage(
-            #     self.wikibase_repo, ProductionConfig.DOCUMENT_REFERENCE_URI_PROPERTY_PID)
-            # document_uri_property.get()
-            # document_uri_claim = self.pywikibot.Claim(
-            #     self.wikibase_repo, document_uri_property.id, datatype=document_uri_property.Type)
-            # document_uri_claim.setTarget(document_link)
-            # new_claims.append(document_uri_claim.toJSON())
-
             new_claims.append(instance_claim.toJSON())
             claim_data['claims'] = new_claims
             new_item.editEntity(claim_data, summary='Adding new claims')
@@ -274,56 +266,6 @@ class UploadLabels():
             return topic_entity
         else:
             return False
-    # def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
-    #     topic_entity = {}
-    #     search_result = self.searchWikiItem(
-    #         self.capitaliseFirstLetter(topic.rstrip()))
-    #     is_exist = self.searchExactWikiItem(
-    #         self.capitaliseFirstLetter(topic.rstrip()))
-    #     if(not search_result and not is_exist):
-    #         """checking for the alias name of the topic if it exists or not"""
-    #         is_alias_exist = self.getItemByAlias(
-    #             self.capitaliseFirstLetter(topic.rstrip()))
-
-    #         if (type(is_alias_exist) == dict):
-    #             """ creating adding that topic into the subtopic list """
-    #             topic_entity.editEntity(is_alias_exist, summary = 'adding the existing alias into the wikibase')
-    #         elif (not is_alias_exist):
-    #             """" creating topic if there is none already """
-    #             data = {}
-    #             label = {lang: topic.capitalize().strip()}
-    #             description = {lang: topic.capitalize().strip() + " entity"}
-    #             data['labels'] = label
-    #             data['descriptions'] = description
-    #             topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
-    #             topic_entity.editEntity(data, summary='Creating new item')
-    #         else:
-    #             """getting the topic by alias"""
-    #             topic_entity = {}
-    #             topic_entity = self.getItemByAlias(
-    #                 self.capitaliseFirstLetter(topic.rstrip()))
-
-    #     else:
-    #         topic_entity = {}
-    #         topic_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-    #         if (topic_exist is True):
-    #             topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-
-    #     if (topic_entity):
-    #         """ mentioned in """
-    #         mentioned_in_property = self.pywikibot.PropertyPage(
-    #             self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
-    #         mentioned_in_property.get()
-    #         mentioned_in_claim = self.pywikibot.Claim(
-    #             self.wikibase_repo,f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
-    #         paragraph_entity.get()
-    #         mentioned_in_claim.setTarget(paragraph_entity)
-    #         topic_entity.addClaim(mentioned_in_claim,
-    #                               summary='Adding new claim')
-    #         return topic_entity
-
-    #     else:
-    #         return False
 
     def createParagraphEntity(self, label, description, text, document_entity, sub_topics, lang):
 
@@ -414,13 +356,9 @@ class UploadLabels():
         description = {language_code: description_text}
 
         wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
-        # if (not wiki_doc_item):
-        #     return False
-        # print('hi-1')
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter = ',')
             line_count = 0
-            # print('hi-2')
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
@@ -438,22 +376,10 @@ class UploadLabels():
                     paragraph_subtopics = paragraph_topics
 
                     paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
-                    # paragraph_entity.get()
-                    # print('This is paragraph subtopics,', paragraph_subtopics)
-                    # print('This is paragraph text', paragraph_text)
-                    # print('hi-3')
                 except Exception as e:
                     print('The exception encountered is ', e)
-                    # err_msg = f"ERROR : {line[0].rstrip()} Row count: {line_count}"
-                    # exc_type, exc_obj, exc_tb = sys.exc_info()
-                    # tb = traceback.extract_tb(exc_tb)[-1]
-                    # err_trace = f"ERROR_TRACE >>>: + {exc_type} , method: {tb[2]} , line-no: {tb[1]}"
-                    # logger = DebugLogger()
-                    # logger.logError('Error in: ', e, exc_type,exc_obj, exc_tb, tb, err_msg)
 
                 line_count = line_count + 1
-        # print('hi-4')
-
 
     def UploadCSV2Wikibase(self, filePath):
 
