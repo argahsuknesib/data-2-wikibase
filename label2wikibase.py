@@ -114,6 +114,40 @@ class UploadLabels():
             return False
 
 
+    def getItemBySparql(self, label):
+        query = """
+        
+            select ?label ?s where
+            {
+                ?s ?p ?o
+                ?s rdfs:label ?label.
+                FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
+                FILTER(?label = "  """ + label + """  ")
+            }
+        """
+
+        self.sparql.setQuery(query)
+        self.sparql.setReturnFormat(JSON)
+        results = self.sparql.query().convert()
+
+        if (results.get('results', None) is not None and 
+            results.get('results').get('bindings') is not None and 
+            type(results.get('results').get('bindings')) is list and
+            len(results.get('results').get('bindings')) > 0 and
+            results.get('results').get('bindings')[0] is not None and
+            results.get('results').get('bindings')[0].get('s', None) is not None and
+            results.get('results').get('bindings')[0].get('s').get('value', None) is not None
+            ):
+            item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+            if (item_qid):
+                item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
+                return item
+            else:
+                return False
+        else:
+            return False
+
+
     def getItemByAlias(self, label):
         query = """
         
@@ -206,22 +240,24 @@ class UploadLabels():
         is_exist = self.searchExactWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
         is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
 
+        if (not search_result and not is_exist):
 
-        if (not search_result and not is_exist and not is_alias_exist):
-            data = {}
-            label = {lang: topic.capitalize().strip()}
-            description = {lang: topic.capitalize().strip() + " entity"}
-            data['labels'] = label
-            data['description'] = description
-            topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
-            topic_entity.editEntity(data, summary = 'Creating new item')
-
-        elif(is_alias_exist):
-            topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-    
+            if (not is_alias_exist):
+                data = {}
+                label = {lang: topic.capitalize().strip()}
+                description = {lang: topic.capitalize().strip() + " entity"}
+                data['labels'] = label
+                data['description'] = description
+                topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+                topic_entity.editEntity(data, summary = 'Creating new item')
+            else:
+                topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+                topic_entity.get()
+                
         else:
-            pass
-            
+            topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
+            topic_entity.get()
+
 
         if (topic_entity):
             """ mentioned in claim """
@@ -231,6 +267,8 @@ class UploadLabels():
             paragraph_entity.get()
             mentioned_in_claim.setTarget(paragraph_entity)
             topic_entity.addClaim(mentioned_in_claim, summary = "adding new claim")
+
+            return topic_entity
         else:
             return False
     # def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
