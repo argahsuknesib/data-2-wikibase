@@ -61,8 +61,8 @@ class UploadLabels():
         query = """
             select ?label ?s where 
             {
-                ?s ?p ?o;
-                ?s rdfs:label ?label.
+                ?s ?p ?o.
+                ?s rdfs:label ?label .
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
                 FILTER(?label = '""" + label + """'@en)
             }
@@ -82,7 +82,7 @@ class UploadLabels():
             select ?label ?s where 
             {
                 ?s ?p ?o;
-                ?s rdfs:label ?label.
+                ?s rdfs:label ?label .
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
                 FILTER(?label = '""" + label + """'@en)
             }
@@ -119,7 +119,7 @@ class UploadLabels():
         
             select ?label ?s where
             {
-                ?s ?p ?o;
+                ?s ?p ?o.
                 ?s rdfs:label ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
                 FILTER(?label = '""" + label + """'@en)
