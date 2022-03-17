@@ -215,8 +215,12 @@ class UploadLabels():
             topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
             topic_entity.editEntity(data, summary = 'Creating new item')
 
+        elif(is_alias_exist):
+            topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+    
         else:
             pass
+            
 
         if (topic_entity):
             """ mentioned in claim """
