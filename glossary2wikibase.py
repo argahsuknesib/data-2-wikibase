@@ -1,3 +1,4 @@
+from ast import alias
 import csv
 import sys
 import configparser
@@ -109,7 +110,7 @@ class UploadItem():
                     """
                     for fourteen alias
                     """
-                   # glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    #glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize()]}, summary = 'adding the synonymns to the label')
                     """
                     for fifteen alias
                     """
@@ -117,14 +118,15 @@ class UploadItem():
                     """
                     for sixteen alias
                     """
-                    glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize(), line['alias16'].capitalize()]}, summary = 'adding the synonymns to the label')
+                    #glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize(), line['alias16'].capitalize()]}, summary = 'adding the synonymns to the label')
                     """
                     for twentyfour aliases
                     """
-
+                    #glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize(), line['alias16'].capitalize(), line['alias17'].capitalize(), line['alias18'].capitalize(), line['alias19'].capitalize(), line['alias20'].capitalize(), line['alias21'].capitalize(), line['alias22'].capitalize(), line['alias23'].capitalize(), line['alias24'].capitalize()]}, summary = 'adding the synonymns to the label')  
+                    """ 
+                    for seventytwo aliases
                     """
-                    for seventytwo alias
-                    """
+                    #glossary_class.editAliases(aliases={'en': [line['alias1'].capitalize(), line['alias2'].capitalize(), line['alias3'].capitalize(), line['alias4'].capitalize(), line['alias5'].capitalize(), line['alias6'].capitalize(), line['alias7'].capitalize(), line['alias8'].capitalize(), line['alias9'].capitalize(), line['alias10'].capitalize(), line['alias11'].capitalize(), line['alias12'].capitalize(), line['alias13'].capitalize(), line['alias14'].capitalize(), line['alias15'].capitalize(), line['alias16'].capitalize(), line['alias17'].capitalize(), line['alias18'].capitalize(), line['alias19'].capitalize(), line['alias20'].capitalize(), line['alias21'].capitalize(), line['alias22'].capitalize(), line['alias23'].capitalize(), line['alias24'].capitalize(), line['alias25'].capitalize(), line['alias26'].capitalize(), line['alias27'].capitalize(), line['alias28'].capitalize(), line['alias29'].capitalize(), line['alias30'].capitalize(), line['alias31'].capitalize(), line['alias32'].capitalize(), line['alias33'].capitalize(), line['alias34'].capitalize(), line['alias35'].capitalize(), line['alias36'].capitalize(), line['alias37'].capitalize(), line['alias38'].capitalize(), line['alias39'].capitalize(), line['alias40'].capitalize(), line['alias41'].capitalize(), line['alias42'].capitalize(), line['alias43'].capitalize(), line['alias44'].capitalize(), line['alias45'].capitalize(), line['alias46'].capitalize(), line['alias47'].capitalize(), line['alias48'].capitalize(), line['alias49'].capitalize(), line['alias50'].capitalize(), line['alias51'].capitalize(), line['alias52'].capitalize(), line['alias53'].capitalize(), line['alias54'].capitalize(), line['alias55'].capitalize(), line['alias56'].capitalize(), line['alias57'].capitalize(), line['alias58'].capitalize(), line['alias59'].capitalize(), line['alias60'].capitalize(), line['alias61'].capitalize(), line['alias62'].capitalize(), line['alias63'].capitalize(), line['alias64'].capitalize(), line['alias65'].capitalize(), line['alias66'].capitalize(), line['alias67'].capitalize(), line['alias68'].capitalize(), line['alias69'].capitalize(), line['alias70'].capitalize(), line['alias71'].capitalize(), line['alias72'].capitalize()]}, summary = 'adding the synonymns to the label')
 
                     # for i in range(1,80):
                     #     if line['alias%d'%i] == '':

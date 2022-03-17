@@ -403,7 +403,6 @@ class UploadLabels():
 def main():
     uploadingLabels = UploadLabels(wikibase)
     uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
-    #uploadingLabels.UploadCSV2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
 
 
 if __name__ == '__main__':
