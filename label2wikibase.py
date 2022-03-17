@@ -200,56 +200,84 @@ class UploadLabels():
                 self.capitaliseFirstLetter(key.rstrip()))
             return entity
 
-    def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
-        topic_entity = {}
-        search_result = self.searchWikiItem(
-            self.capitaliseFirstLetter(topic.rstrip()))
-        is_exist = self.searchExactWikiItem(
-            self.capitaliseFirstLetter(topic.rstrip()))
-        if(not search_result and not is_exist):
-            """checking for the alias name of the topic if it exists or not"""
-            is_alias_exist = self.getItemByAlias(
-                self.capitaliseFirstLetter(topic.rstrip()))
+    def create_sub_topic(self, topic, paragraph_entity, lang):
+        search_result = self.searchWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
+        is_exist = self.searchExactWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
+        is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
 
-            if (type(is_alias_exist) == dict):
-                """ creating adding that topic into the subtopic list """
-                topic_entity.editEntity(is_alias_exist, summary = 'adding the existing alias into the wikibase')
-            elif (not is_alias_exist):
-                """" creating topic if there is none already """
-                data = {}
-                label = {lang: topic.capitalize().strip()}
-                description = {lang: topic.capitalize().strip() + " entity"}
-                data['labels'] = label
-                data['descriptions'] = description
-                topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
-                topic_entity.editEntity(data, summary='Creating new item')
-            else:
-                """getting the topic by alias"""
-                topic_entity = {}
-                topic_entity = self.getItemByAlias(
-                    self.capitaliseFirstLetter(topic.rstrip()))
+
+        if (not search_result and not is_exist and not is_alias_exist):
+            data = {}
+            label = {lang: topic.capitalize().strip()}
+            description = {lang: topic.capitalize().strip() + " entity"}
+            data['labels'] = label
+            data['description'] = description
+            topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+            topic_entity.editEntity(data, summary = 'Creating new item')
 
         else:
-            topic_entity = {}
-            topic_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-            if (topic_exist is True):
-                topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+            pass
 
         if (topic_entity):
-            """ mentioned in """
-            mentioned_in_property = self.pywikibot.PropertyPage(
-                self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+            """ mentioned in claim """
+            mentioned_in_property = self.pywikibot.PropertyPage(self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
             mentioned_in_property.get()
-            mentioned_in_claim = self.pywikibot.Claim(
-                self.wikibase_repo,f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+            mentioned_in_claim = self.pywikibot.Claim(self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
             paragraph_entity.get()
             mentioned_in_claim.setTarget(paragraph_entity)
-            topic_entity.addClaim(mentioned_in_claim,
-                                  summary='Adding new claim')
-            return topic_entity
-
+            topic_entity.addClaim(mentioned_in_claim, summary = "adding new claim")
         else:
             return False
+    # def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
+    #     topic_entity = {}
+    #     search_result = self.searchWikiItem(
+    #         self.capitaliseFirstLetter(topic.rstrip()))
+    #     is_exist = self.searchExactWikiItem(
+    #         self.capitaliseFirstLetter(topic.rstrip()))
+    #     if(not search_result and not is_exist):
+    #         """checking for the alias name of the topic if it exists or not"""
+    #         is_alias_exist = self.getItemByAlias(
+    #             self.capitaliseFirstLetter(topic.rstrip()))
+
+    #         if (type(is_alias_exist) == dict):
+    #             """ creating adding that topic into the subtopic list """
+    #             topic_entity.editEntity(is_alias_exist, summary = 'adding the existing alias into the wikibase')
+    #         elif (not is_alias_exist):
+    #             """" creating topic if there is none already """
+    #             data = {}
+    #             label = {lang: topic.capitalize().strip()}
+    #             description = {lang: topic.capitalize().strip() + " entity"}
+    #             data['labels'] = label
+    #             data['descriptions'] = description
+    #             topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+    #             topic_entity.editEntity(data, summary='Creating new item')
+    #         else:
+    #             """getting the topic by alias"""
+    #             topic_entity = {}
+    #             topic_entity = self.getItemByAlias(
+    #                 self.capitaliseFirstLetter(topic.rstrip()))
+
+    #     else:
+    #         topic_entity = {}
+    #         topic_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+    #         if (topic_exist is True):
+    #             topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+
+    #     if (topic_entity):
+    #         """ mentioned in """
+    #         mentioned_in_property = self.pywikibot.PropertyPage(
+    #             self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+    #         mentioned_in_property.get()
+    #         mentioned_in_claim = self.pywikibot.Claim(
+    #             self.wikibase_repo,f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+    #         paragraph_entity.get()
+    #         mentioned_in_claim.setTarget(paragraph_entity)
+    #         topic_entity.addClaim(mentioned_in_claim,
+    #                               summary='Adding new claim')
+    #         return topic_entity
+
+    #     else:
+    #         return False
 
     def createParagraphEntity(self, label, description, text, document_entity, sub_topics, lang):
 
