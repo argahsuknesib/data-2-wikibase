@@ -254,6 +254,7 @@ class UploadLabels():
                 topic_entity.editEntity(data, summary = 'Creating new item')
             else:
                 topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+                topic_entity.editEntity(data, summary = '')
                 topic_entity.get()
                 
         else:
@@ -265,7 +266,7 @@ class UploadLabels():
             """ mentioned in claim """
             mentioned_in_property = self.pywikibot.PropertyPage(self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
             mentioned_in_property.get()
-            mentioned_in_claim = self.pywikibot.Claim(self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+            mentioned_in_claim = self.pywikibot.Claim(self.wikibase_repo, mentioned_in_property.id)
             paragraph_entity.get()
             mentioned_in_claim.setTarget(paragraph_entity)
             topic_entity.addClaim(mentioned_in_claim, summary = "adding new claim")
