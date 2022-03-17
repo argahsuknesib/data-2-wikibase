@@ -64,7 +64,7 @@ class UploadLabels():
                 ?s ?p ?o.
                 ?s rdfs:label ?label .
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '""" + label + """'@en)
+                FILTER(?label = '"""+label+"""'@en)
             }
         """
 
@@ -84,7 +84,8 @@ class UploadLabels():
                 ?s ?p ?o;
                 ?s rdfs:label ?label .
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '""" + label + """'@en)
+                FILTER(?label = '"""+label+"""'@en)
+
             }
         """
         
@@ -101,7 +102,7 @@ class UploadLabels():
                 ?s ?p ?o;
                     skos:altLabel ?label .
                 FILTER(lang(?label)='fr' || lang(?label)='en')
-                FILTER(?label = '""" + label + """'@en)
+                FILTER(?label = '"""+label+"""'@en)
             }
         
         """
@@ -122,8 +123,8 @@ class UploadLabels():
                 ?s ?p ?o.
                 ?s rdfs:label ?label.
                 FILTER(lang(?label) = 'fr' || lang(?label) = 'en')
-                FILTER(?label = '""" + label + """'@en)
-
+                FILTER(?label = '"""+label+"""'@en)
+                
             }
         """
 
