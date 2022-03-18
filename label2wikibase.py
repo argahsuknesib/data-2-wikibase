@@ -209,7 +209,7 @@ class UploadLabels():
                 self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
             instance_of_property.get()
             instance_claim = self.pywikibot.Claim(
-                self.wikibase_repo, instance_of_property.id)
+                self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
             instance_claim.setTarget(document_class_entity)
 
 
@@ -286,7 +286,7 @@ class UploadLabels():
             self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
         instance_of_property.get()
         instance_claim = self.pywikibot.Claim(
-            self.wikibase_repo, instance_of_property.id)
+            self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
         instance_claim.setTarget(paragraph_class_entity)
         paragraph_item.addClaim(
             instance_claim, summary='Adding claim to the paragraph')
@@ -329,7 +329,7 @@ class UploadLabels():
                         self.wikibase_repo, f'{ProductionConfig.HAS_TOPIC_PROPERTY_PID}')
                     has_topic_property.get()
                     has_topic_claim = self.pywikibot.Claim(
-                        self.wikibase_repo, has_text_property.id)
+                        self.wikibase_repo, f'{ProductionConfig.HAS_PARAGRAPH_PROPERTY_PID}')
                     has_topic_claim.setTarget(topic_entity)
                     paragraph_item.addClaim(
                         has_topic_claim, summary='Adding claim to the paragraph')
