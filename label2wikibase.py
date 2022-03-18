@@ -10,6 +10,7 @@ from xml.dom.minidom import Document
 import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
 from configWikibaseID import ProductionConfig
+import re
 
 config = configparser.ConfigParser()
 config.read('config/application.config.ini')
@@ -367,6 +368,7 @@ class UploadLabels():
                     paragraph_label = {language_code : paragraph_label_value}
                     paragraph_description = {language_code : paragraph_description_value}
                     paragraph_text = line['Paragraph'].strip()
+                    paragraph_text =  re.sub('\ |\/|\;|\:|\]|\[|\{|\}|\?|\$|\%|\£|\*|\&|\@|\<|\>', ' ', paragraph_text)
                     paragraph_topics = []
                     for i in range(1, 15):
                         if(line[f'Label {i}']) != "":
