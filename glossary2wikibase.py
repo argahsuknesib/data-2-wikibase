@@ -1,5 +1,6 @@
 from ast import alias
 import csv
+from distutils.command.upload import upload
 import sys
 import configparser
 import traceback
@@ -146,7 +147,7 @@ class UploadItem():
 def main():
     uploading_item = UploadItem(wikibase)
     # uploading_item.readCSV('data/glossary/DRPI-glossary-test.csv')
-    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-Label.csv')
+    uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-Label.csv')
    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-OneAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwoAlias.csv')
    # uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ThreeAlias.csv')
@@ -161,9 +162,9 @@ def main():
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwelveAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ThirteenAlias.csv')
    # uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-FourteenAlias.csv')
-    uploading_item.readCSV('data/glossary/DRPI-Final/DRPi-SixTeenAlias.csv')
+    #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-SixTeenAlias.csv')
     #uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-ElevenAlias.csv')
-
-
+    # uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-TwentyFourAlias.csv')
+    # uploading_item.readCSV('data/glossary/DRPI-Final/DRPI-SeventyTwo.csv')
 if __name__ == '__main__':
     main()
