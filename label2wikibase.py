@@ -411,13 +411,13 @@ def main():
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/END THE WAR ON BLACK HEALTH AND BLACK DISABLED PEOPLE report word.csv")
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/For Disabled Sex Workers, Congress Anti-Trafficking Legislation Is Life Threatening by Cyrée Jarelle Johnson.csv")
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/How I Relate to the DAPL Protests as a Black Woman by Keah Brown.csv")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
-    uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
+    # uploadingLabels.Upload2Wikibase("")
 
 
 
