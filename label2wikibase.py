@@ -32,7 +32,6 @@ class UploadLabels():
         self.properties = {}
         self.pywikibot = pywikibot
 
-
     def capitaliseFirstLetter(self, word):
         return word.capitalize()
 
@@ -78,7 +77,6 @@ class UploadLabels():
         else:
             return False
 
-
     def getWikiItem(self, label):
         query = """
             select ?label ?s where 
@@ -90,11 +88,12 @@ class UploadLabels():
 
             }
         """
-        
+
         self.sparql.setQuery(query)
         self.sparql.setReturnFormat(JSON)
         results = self.sparql.query().convert()
-        item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+        item_qid = results['results']['bindings'][0]['s']['value'].split(
+            "/")[-1]
         return item_qid
 
     def searchItemByAlias(self, label):
@@ -116,7 +115,6 @@ class UploadLabels():
         else:
             return False
 
-
     def getItemBySparql(self, label):
         query = """
         
@@ -134,15 +132,17 @@ class UploadLabels():
         self.sparql.setReturnFormat(JSON)
         results = self.sparql.query().convert()
 
-        if (results.get('results', None) is not None and 
-            results.get('results').get('bindings') is not None and 
+        if (results.get('results', None) is not None and
+            results.get('results').get('bindings') is not None and
             type(results.get('results').get('bindings')) is list and
             len(results.get('results').get('bindings')) > 0 and
             results.get('results').get('bindings')[0] is not None and
             results.get('results').get('bindings')[0].get('s', None) is not None and
-            results.get('results').get('bindings')[0].get('s').get('value', None) is not None
+            results.get('results').get('bindings')[0].get(
+            's').get('value', None) is not None
             ):
-            item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+            item_qid = results['results']['bindings'][0]['s']['value'].split(
+                "/")[-1]
             if (item_qid):
                 item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
                 return item
@@ -152,7 +152,6 @@ class UploadLabels():
         else:
             print('false from getItemBySparql  - second')
             return False
-
 
     def getItemByAlias(self, label):
         query = """
@@ -218,7 +217,6 @@ class UploadLabels():
                 self.wikibase_repo, f'{ProductionConfig.INSTACE_OF_PROPERTY_PID}')
             instance_claim.setTarget(document_class_entity)
 
-
             """
             uncomment this code about document URI just in case you 
             found a reason to add the actual link of the document.
@@ -236,9 +234,12 @@ class UploadLabels():
 
     def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
         topic_entity = {}
-        search_result = self.searchWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
-        is_exist = self.searchExactWikiItem(self.capitaliseFirstLetter(topic.rstrip()))
-        is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+        search_result = self.searchWikiItem(
+            self.capitaliseFirstLetter(topic.rstrip()))
+        is_exist = self.searchExactWikiItem(
+            self.capitaliseFirstLetter(topic.rstrip()))
+        is_alias_exist = self.searchItemByAlias(
+            self.capitaliseFirstLetter(topic.rstrip()))
 
         if (not search_result and not is_exist):
             if(not is_alias_exist):
@@ -248,14 +249,14 @@ class UploadLabels():
                 data['labels'] = label
                 data['description'] = description
                 topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
-                topic_entity.editEntity(data, summary = 'Creating new item')
+                topic_entity.editEntity(data, summary='Creating new item')
             else:
-                topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+                topic_entity = self.getItemByAlias(
+                    self.capitaliseFirstLetter(topic.rstrip()))
         else:
-            topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
+            topic_entity = self.getItemBySparql(
+                self.capitaliseFirstLetter(topic.rstrip()))
             topic_entity.get()
-            
-
 
         # if (not search_result and not is_exist):
 
@@ -271,20 +272,22 @@ class UploadLabels():
         #         topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
         #         topic_entity.editEntity(data, summary = '')
         #         topic_entity.get()
-                
+
         # else:
         #     topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
         #     # topic_entity.get()
 
-
         if (topic_entity):
             """ mentioned in claim """
-            mentioned_in_property = self.pywikibot.PropertyPage(self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
+            mentioned_in_property = self.pywikibot.PropertyPage(
+                self.wikibase_repo, f'{ProductionConfig.MENTIONED_IN_PROPERTY_PID}')
             mentioned_in_property.get()
-            mentioned_in_claim = self.pywikibot.Claim(self.wikibase_repo, mentioned_in_property.id)
+            mentioned_in_claim = self.pywikibot.Claim(
+                self.wikibase_repo, mentioned_in_property.id)
             paragraph_entity.get()
             mentioned_in_claim.setTarget(paragraph_entity)
-            topic_entity.addClaim(mentioned_in_claim, summary = "adding new claim")
+            topic_entity.addClaim(mentioned_in_claim,
+                                  summary="adding new claim")
 
             return topic_entity
         else:
@@ -374,33 +377,39 @@ class UploadLabels():
     def Upload2Wikibase(self, filePath):
         document_name = ntpath.basename(filePath)[0:-4]
         language_code = 'en'
-        label = {language_code : document_name.capitalize()}
-        description_text = "This document titled " + document_name + " and is added to the disability wikibase"
+        label = {language_code: document_name.capitalize()}
+        description_text = "This document titled " + \
+            document_name + " and is added to the disability wikibase"
         description = {language_code: description_text}
 
-        wiki_doc_item = self.createDocumentEntity(label=label, description=description, key = document_name)
+        wiki_doc_item = self.createDocumentEntity(
+            label=label, description=description, key=document_name)
         with open(filePath, 'r') as csv_file:
-            csv_reader = csv.DictReader(csv_file, delimiter = ',')
+            csv_reader = csv.DictReader(csv_file, delimiter=',')
             line_count = 0
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
-                    paragraph_label_value =  f"{document_name.capitalize()} paragraph number {line_count}"
-                    paragraph_description_value =  f"Paragraph from {document_name.capitalize()} document"
-                    paragraph_label = {language_code : paragraph_label_value}
-                    paragraph_description = {language_code : paragraph_description_value}
+                    paragraph_label_value = f"{document_name.capitalize()} paragraph number {line_count}"
+                    paragraph_description_value = f"Paragraph from {document_name.capitalize()} document"
+                    paragraph_label = {language_code: paragraph_label_value}
+                    paragraph_description = {
+                        language_code: paragraph_description_value}
                     paragraph_text_raw = line['Paragraph'].strip()
 
-                    paragraph_text = paragraph_text_raw.replace('\n', ' ').replace('\t', ' ').replace('\r', ' ').rstrip().lstrip()
+                    paragraph_text = paragraph_text_raw.replace('\n', ' ').replace(
+                        '\t', ' ').replace('\r', ' ').rstrip().lstrip()
                     paragraph_topics = []
                     for i in range(1, 15):
                         if(line[f'Label {i}']) != "":
-                            paragraph_topics.append(line[f'Label {i}'].capitalize())
+                            paragraph_topics.append(
+                                line[f'Label {i}'].capitalize())
                         else:
                             pass
                     paragraph_subtopics = paragraph_topics
 
-                    paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
+                    paragraph_entity = self.createParagraphEntity(label=paragraph_label, description=paragraph_description,
+                                                                  text=paragraph_text, document_entity=wiki_doc_item, sub_topics=paragraph_subtopics, lang=language_code)
                     time.sleep(5)
                 except Exception as e:
                     print('The exception encountered is ', e)
@@ -416,14 +425,15 @@ class UploadLabels():
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
             line_count = 0
-            doc_item = self.createDocumentEntity(label = label, description = description, key = fileName, document_link= None, type= None)
+            doc_item = self.createDocumentEntity(
+                label=label, description=description, key=fileName, document_link=None, type=None)
             doc_item.get()
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
                     pass
                 except Exception as e:
-                    print('The exception encountered is ',e)
+                    print('The exception encountered is ', e)
                 line_count = line_count + 1
 
 
@@ -438,14 +448,22 @@ def main():
     #uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/END THE WAR ON BLACK HEALTH AND BLACK DISABLED PEOPLE report word.csv")
     #uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/For Disabled Sex Workers, Congress Anti-Trafficking Legislation Is Life Threatening by Cyrée Jarelle Johnson.csv")
     #uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/How I Relate to the DAPL Protests as a Black Woman by Keah Brown.csv")
+    
+    uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Integrating Race word.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Introducing White Disability Studies word.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Magic from the madness- On black disabled activists and artists making change in 2016 by Syrus Marcus Ware.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Our language is the heart of what we are- Tamyka Bullen is putting deaf culture centre stage.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/The Prison Strike Challenges Ableism and Defends Disability Rights by Talila A. Lewis & Dustin Gibson.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/The Roots of Krip-Hop Nation Rob, Keith & Leroy by von koka.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/They Dont Know, Dont Show, or Dont Care_Autisms White Privilege Problem by Morénike Giwa Onaiwu.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Understanding the Policing of Black, Disabled Bodies by Vilissa Thompson.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/What Disabled Culture Teaches On Life Post word.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/White Privilege & Inspiration Porn by Vilissa Thompson.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/why I dons use _anti-Black ableism_ (& language longings) by Talila A. Lewis.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Work in the INtersection- A Black Feminist Disability Framework by Moya Bailey and Izetta Autumn Mobley.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Working definition of ableism word.csv")
     # uploadingLabels.Upload2Wikibase("")
     # uploadingLabels.Upload2Wikibase("")
-    # uploadingLabels.Upload2Wikibase("")
-    # uploadingLabels.Upload2Wikibase("")
-    # uploadingLabels.Upload2Wikibase("")
-    # uploadingLabels.Upload2Wikibase("")
-    # uploadingLabels.Upload2Wikibase("")
-
 
 
 if __name__ == '__main__':
