@@ -369,7 +369,6 @@ class UploadLabels():
                     paragraph_description = {language_code : paragraph_description_value}
                     paragraph_text_raw = line['Paragraph']
                     paragraph_text = paragraph_text_raw.strip()
-                    paragraph_text =  re.sub('\ |\/|\;|\:|\]|\[|\{|\}|\?|\$|\%|\£|\*|\&|\@|\<|\>', ' ', paragraph_text)
                     paragraph_topics = []
                     for i in range(1, 15):
                         if(line[f'Label {i}']) != "":
