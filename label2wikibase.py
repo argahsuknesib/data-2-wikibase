@@ -317,7 +317,7 @@ class UploadLabels():
         has_text_property.get()
         has_text_claim = self.pywikibot.Claim(
             self.wikibase_repo, has_text_property.id)
-        has_text_claim.setTarget(text)
+        has_text_claim.setTarget(text.strip())
         paragraph_item.addClaim(
             has_text_claim, summary='Adding claim to the paragraph')
 
@@ -409,8 +409,8 @@ class UploadLabels():
 def main():
     uploadingLabels = UploadLabels(wikibase)
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/(1977) The Combahee River Collective Statement.csv")
-    uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/A Paradoxical History of Black Disease by Cyrée Jarelle Johnson.csv")
-    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Autistic while black How autism amplifies stereotypes by Catina Burkett.csv")
+    # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/A Paradoxical History of Black Disease by Cyrée Jarelle Johnson.csv")
+    uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Autistic while black How autism amplifies stereotypes by Catina Burkett.csv")
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Black Disability Gone Viral word.csv")
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Developing and Reflecting on a Black Disability Studies Pedagogy .csv")
     # uploadingLabels.Upload2Wikibase("data/Black-Disability/CSV/Disability Justice Is an Essential Part of Abolishing Police and Prisons by Talila _TL_ Lewis.csv")
