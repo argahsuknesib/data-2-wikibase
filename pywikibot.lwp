@@ -1,5 +1,5 @@
 #LWP-Cookies-2.0
-Set-Cookie3: UseCDNCache=false; path="/"; domain="localhost.local"; path_spec; expires="2022-03-16 10:52:26Z"; HttpOnly=None; version=0
-Set-Cookie3: UseDC=master; path="/"; domain="localhost.local"; path_spec; expires="2022-03-16 10:52:26Z"; HttpOnly=None; version=0
-Set-Cookie3: my_wiki_BPsession=lss93aa2ks36eoie2ndqf3k2spkvgg9l; path="/"; domain="localhost.local"; path_spec; discard; HttpOnly=None; version=0
-Set-Cookie3: my_wiki_session=ltog0hft5vqmj46uc47phggmr94jksh8; path="/"; domain="localhost.local"; path_spec; discard; HttpOnly=None; version=0
+Set-Cookie3: UseCDNCache=false; path="/"; domain="localhost.local"; path_spec; expires="2022-03-21 16:27:33Z"; HttpOnly=None; version=0
+Set-Cookie3: UseDC=master; path="/"; domain="localhost.local"; path_spec; expires="2022-03-21 16:27:33Z"; HttpOnly=None; version=0
+Set-Cookie3: my_wiki_BPsession=59oiqrvvb5ip4drbo14tdc0ju9ffh3sp; path="/"; domain="localhost.local"; path_spec; discard; HttpOnly=None; version=0
+Set-Cookie3: my_wiki_session=20fvf3ugfv9hhkngp0v1ctkudp62sn33; path="/"; domain="localhost.local"; path_spec; discard; HttpOnly=None; version=0
