@@ -146,10 +146,10 @@ class UploadLabels():
                 item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
                 return item
             else:
-                print('false from getItemBySparql')
+                print('false from getItemBySparql - first')
                 return False
         else:
-            print('false from getItemBySparql')
+            print('false from getItemBySparql  - second')
             return False
 
 
