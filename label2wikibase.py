@@ -5,6 +5,7 @@ import ntpath
 from pydoc import doc
 import sys
 import traceback
+import time
 from urllib import request
 from xml.dom.minidom import Document
 import pywikibot
@@ -400,10 +401,12 @@ class UploadLabels():
                     paragraph_subtopics = paragraph_topics
 
                     paragraph_entity = self.createParagraphEntity(label = paragraph_label, description = paragraph_description, text = paragraph_text, document_entity= wiki_doc_item , sub_topics= paragraph_subtopics, lang = language_code)
+                    time.sleep(5)
                 except Exception as e:
                     print('The exception encountered is ', e)
 
                 line_count = line_count + 1
+                time.sleep(5)
 
     def UploadCSV2Wikibase(self, filePath):
 
