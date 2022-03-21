@@ -355,7 +355,7 @@ class UploadLabels():
                         self.wikibase_repo, f'{ProductionConfig.HAS_TOPIC_PROPERTY_PID}')
                     has_topic_property.get()
                     has_topic_claim = self.pywikibot.Claim(
-                        self.wikibase_repo, f'{ProductionConfig.HAS_PARAGRAPH_PROPERTY_PID}')
+                        self.wikibase_repo, has_topic_property.id)
                     has_topic_claim.setTarget(topic_entity)
                     paragraph_item.addClaim(
                         has_topic_claim, summary='Adding claim to the paragraph')
