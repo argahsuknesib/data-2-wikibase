@@ -146,8 +146,10 @@ class UploadLabels():
                 item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
                 return item
             else:
+                print('false from getItemBySparql')
                 return False
         else:
+            print('false from getItemBySparql')
             return False
 
 
@@ -181,8 +183,10 @@ class UploadLabels():
                 item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
                 return item
             else:
+                print('false from getItemByAlias')
                 return False
         else:
+            print('false from getItemByAlias')
             return False
 
     def createDocumentEntity(self, label, description, key):
@@ -323,7 +327,7 @@ class UploadLabels():
             for sub_topic in sub_topics:
                 topic_entity = self.create_sub_topic(
                     sub_topic, paragraph_item, document_entity, lang)
-                # topic_entity.get()
+                topic_entity.get()
 
                 if (topic_entity):
                     has_topic_property = self.pywikibot.PropertyPage(
