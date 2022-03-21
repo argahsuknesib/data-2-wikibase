@@ -229,7 +229,7 @@ class UploadLabels():
 
             return new_item
         else:
-            entity = self.searchWikiItem(
+            entity = self.getItemBySparql(
                 self.capitaliseFirstLetter(key.rstrip()))
             return entity
 
@@ -256,7 +256,7 @@ class UploadLabels():
                 
         else:
             topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
-            topic_entity.get()
+            # topic_entity.get()
 
 
         if (topic_entity):
