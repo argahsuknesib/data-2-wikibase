@@ -169,25 +169,24 @@ class UploadLabels():
         self.sparql.setReturnFormat(JSON)
         results = self.sparql.query().convert()
 
-        if (results.get('results', None) is not None and results.get('results').get('bindings') is not None
-                and type(results.get('results').get('bindings')) is list and len(results.get('results').get('bindings')) > 0
-                and results.get('results').get('bindings')[0] is not None and
-                results.get('results').get('bindings')[
-                0].get('s', None) is not None
-                and results.get('results').get('bindings')[0].get('s').get('value', None) is not None
-                ):
+        # if (results.get('results', None) is not None and results.get('results').get('bindings') is not None
+        #         and type(results.get('results').get('bindings')) is list and len(results.get('results').get('bindings')) > 0
+        #         and results.get('results').get('bindings')[0] is not None and
+        #         results.get('results').get('bindings')[
+        #         0].get('s', None) is not None
+        #         and results.get('results').get('bindings')[0].get('s').get('value', None) is not None
+        #         ):
 
-            item_qid = results['results']['bindings'][0]['s']['value'].split(
-                "/")[-1]
-            if (item_qid):
-                item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
-                return item
-            else:
-                print('false from getItemByAlias')
-                return False
+        item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+        if (item_qid):
+            item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
+            return item
         else:
             print('false from getItemByAlias')
             return False
+        # else:
+        #     print('false from getItemByAlias')
+        #     return False
 
     def createDocumentEntity(self, label, description, key):
         search_result = self.searchWikiItem(
