@@ -133,24 +133,24 @@ class UploadLabels():
         self.sparql.setReturnFormat(JSON)
         results = self.sparql.query().convert()
 
-        # if (results.get('results', None) is not None and 
-        #     results.get('results').get('bindings') is not None and 
-        #     type(results.get('results').get('bindings')) is list and
-        #     len(results.get('results').get('bindings')) > 0 and
-        #     results.get('results').get('bindings')[0] is not None and
-        #     results.get('results').get('bindings')[0].get('s', None) is not None and
-        #     results.get('results').get('bindings')[0].get('s').get('value', None) is not None
-        #     ):
-        item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
-        if (item_qid):
-            item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
-            return item
+        if (results.get('results', None) is not None and 
+            results.get('results').get('bindings') is not None and 
+            type(results.get('results').get('bindings')) is list and
+            len(results.get('results').get('bindings')) > 0 and
+            results.get('results').get('bindings')[0] is not None and
+            results.get('results').get('bindings')[0].get('s', None) is not None and
+            results.get('results').get('bindings')[0].get('s').get('value', None) is not None
+            ):
+            item_qid = results['results']['bindings'][0]['s']['value'].split("/")[-1]
+            if (item_qid):
+                item = self.pywikibot.ItemPage(self.wikibase_repo, item_qid)
+                return item
+            else:
+                print('false from getItemBySparql - first')
+                return False
         else:
-            print('false from getItemBySparql - first')
+            print('false from getItemBySparql  - second')
             return False
-        # else:
-        #     print('false from getItemBySparql  - second')
-        #     return False
 
 
     def getItemByAlias(self, label):
@@ -240,8 +240,7 @@ class UploadLabels():
         is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
 
         if (not search_result and not is_exist):
-
-            if (not is_alias_exist):
+            if(not is_alias_exist):
                 data = {}
                 label = {lang: topic.capitalize().strip()}
                 description = {lang: topic.capitalize().strip() + " entity"}
@@ -251,12 +250,30 @@ class UploadLabels():
                 topic_entity.editEntity(data, summary = 'Creating new item')
             else:
                 topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-                topic_entity.editEntity(data, summary = '')
-                topic_entity.get()
-                
         else:
             topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
-            # topic_entity.get()
+            topic_entity.get()
+            
+
+
+        # if (not search_result and not is_exist):
+
+        #     if (not is_alias_exist):
+        #         data = {}
+        #         label = {lang: topic.capitalize().strip()}
+        #         description = {lang: topic.capitalize().strip() + " entity"}
+        #         data['labels'] = label
+        #         data['description'] = description
+        #         topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+        #         topic_entity.editEntity(data, summary = 'Creating new item')
+        #     else:
+        #         topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
+        #         topic_entity.editEntity(data, summary = '')
+        #         topic_entity.get()
+                
+        # else:
+        #     topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
+        #     # topic_entity.get()
 
 
         if (topic_entity):
