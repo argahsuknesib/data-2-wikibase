@@ -2,4 +2,4 @@
 #(u'WikibaseAdmin', BotPassword(u'Disability-Wikibase', u'j573bokmv4cui3tldafvj3pu4jsqchg7'))
 # (u'WikibaseAdmin', BotPassword(u'Disability-Wikibase', u'vt73k6luh8rpvf9drqb729kf5sap75k7'))
 #(u'WikibaseAdmin', BotPassword(u'Disability-Wikibase', u'jbnjr2hifd19q5cp89cqo2chp6l6ih7l'))
-(u'WikibaseAdmin', BotPassword(u'Disability-Wikibase', u'mu5mpej9ja1sieu1qba7sp3i1s4trc64'))
+(u'WikibaseAdmin', BotPassword(u'Disability-Wikibase', u'43f76b4s72s9tg2ep7ldv8gdoikr9ft9'))
