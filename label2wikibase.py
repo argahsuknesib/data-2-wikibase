@@ -12,6 +12,7 @@ import pywikibot
 from SPARQLWrapper import SPARQLWrapper, JSON
 from configWikibaseID import ProductionConfig
 import re
+from glossaryList import WordList
 
 config = configparser.ConfigParser()
 config.read('config/application.config.ini')
@@ -232,6 +233,38 @@ class UploadLabels():
                 self.capitaliseFirstLetter(key.rstrip()))
             return entity
 
+    
+    def createTitleWordsEntity(self, label, title_word, lang):  
+
+        title_entity = {}
+        search_result = self.searchWikiItem(self.capitaliseFirstLetter(title_word.rstrip()))
+        is_exist = self.searchExactWikiItem(self.capitaliseFirstLetter(title_word.rstrip()))
+        is_alias_exist = self.searchItemByAlias(self.capitaliseFirstLetter(title_word.rstrip()))   
+
+        if (not search_result and not is_exist):
+            if(not is_alias_exist):
+                data = {}
+                label = {lang: title_word.capitalize().strip()}
+                description = {lang: title_word.capitalize().strip() + " entity and should be added into the glossary."}
+                data['labels'] = label
+                data['description'] = description
+                title_entity = self.pywikibot.ItemPage(self.wikibase_repo)
+                title_entity.editEntity(data, summary='creating a new title word item')
+            else:
+                title_entity = self.getItemByAlias(self.capitaliseFirstLetter(title_word.rstrip()))
+        else:
+            title_entity = self.getItemBySparql(self.capitaliseFirstLetter(title_word.rstrip()))
+            title_entity.get()
+
+
+        if (title_entity):
+            '''
+            do we need a relation for the title words to be mentioned in a particular document and a paragraph?
+            '''
+            
+
+
+
     def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
         topic_entity = {}
         search_result = self.searchWikiItem(
@@ -257,25 +290,6 @@ class UploadLabels():
             topic_entity = self.getItemBySparql(
                 self.capitaliseFirstLetter(topic.rstrip()))
             topic_entity.get()
-
-        # if (not search_result and not is_exist):
-
-        #     if (not is_alias_exist):
-        #         data = {}
-        #         label = {lang: topic.capitalize().strip()}
-        #         description = {lang: topic.capitalize().strip() + " entity"}
-        #         data['labels'] = label
-        #         data['description'] = description
-        #         topic_entity = self.pywikibot.ItemPage(self.wikibase_repo)
-        #         topic_entity.editEntity(data, summary = 'Creating new item')
-        #     else:
-        #         topic_entity = self.getItemByAlias(self.capitaliseFirstLetter(topic.rstrip()))
-        #         topic_entity.editEntity(data, summary = '')
-        #         topic_entity.get()
-
-        # else:
-        #     topic_entity = self.getItemBySparql(self.capitaliseFirstLetter(topic.rstrip()))
-        #     # topic_entity.get()
 
         if (topic_entity):
             """ mentioned in claim """
@@ -386,7 +400,7 @@ class UploadLabels():
             label=label, description=description, key=document_name)
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
-            line_count = 0
+            line_count = 1
             for line in csv_reader:
                 print(f'currently on the line {line_count}')
                 try:
@@ -416,25 +430,6 @@ class UploadLabels():
 
                 line_count = line_count + 1
                 time.sleep(5)
-
-    def UploadCSV2Wikibase(self, filePath):
-
-        fileName = ntpath.basename(filePath)[0:-4]
-        label = {fileName.capitalize()}
-        description = "This file has origin from Black Disability"
-        with open(filePath, 'r') as csv_file:
-            csv_reader = csv.DictReader(csv_file, delimiter=',')
-            line_count = 0
-            doc_item = self.createDocumentEntity(
-                label=label, description=description, key=fileName, document_link=None, type=None)
-            doc_item.get()
-            for line in csv_reader:
-                print(f'currently on the line {line_count}')
-                try:
-                    pass
-                except Exception as e:
-                    print('The exception encountered is ', e)
-                line_count = line_count + 1
 
 
 def main():
