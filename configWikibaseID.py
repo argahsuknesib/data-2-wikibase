@@ -154,6 +154,7 @@ class DevelopmentConfig(Config):
     HAS_TOPIC_PROPERTY_PID = 'P7'
     HAS_PARAGRAPH_PROPERTY_PID = 'P3'
     MENTIONED_IN_PROPERTY_PID = 'P29'
+    HAS_TITLE_WORDS_PID = 'P35'
 
 
 class TestingConfig(Config):
@@ -219,6 +220,8 @@ class ProductionConfig(Config):
     HAS_TOPIC_PROPERTY_PID = 'P7'
     HAS_PARAGRAPH_PROPERTY_PID = 'P3'
     MENTIONED_IN_PROPERTY_PID = 'P29'
+    HAS_TITLE_WORDS_PID = 'P35'
+
 
 
 config_by_name = dict(

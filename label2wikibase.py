@@ -1,6 +1,7 @@
 from cgitb import text
 import csv
 import configparser
+from fileinput import filename
 import ntpath
 from pydoc import doc
 import sys
@@ -234,7 +235,7 @@ class UploadLabels():
             return entity
 
     
-    def createTitleWordsEntity(self, label, title_word, lang):  
+    def createTitleWordsEntity(self, document_entity,  title_word, lang):  
 
         title_entity = {}
         search_result = self.searchWikiItem(self.capitaliseFirstLetter(title_word.rstrip()))
@@ -258,12 +259,14 @@ class UploadLabels():
 
 
         if (title_entity):
-            '''
-            do we need a relation for the title words to be mentioned in a particular document and a paragraph?
-            '''
-            
+            has_title_word_property = self.pywikibot.PropertyPage(self.wikibase_repo, f'{ProductionConfig.HAS_TITLE_WORDS_PID}')
+            has_title_word_property.get()
+            has_title_word_claim = self.pywikibot.Claim(self.wikibase_repo, has_title_word_property.id)
+            document_entity.get()
+            has_title_word_claim.setTarget(document_entity)
+            title_entity.addClaim(has_title_word_claim, summary="adding new claim")
 
-
+    
 
     def create_sub_topic(self, topic, paragraph_entity, document_entity, lang):
         topic_entity = {}
@@ -398,6 +401,23 @@ class UploadLabels():
 
         wiki_doc_item = self.createDocumentEntity(
             label=label, description=description, key=document_name)
+
+        '''
+        add the has title words entity here
+        '''
+        glossary_list = WordList()
+        word_list = []
+        word_document_name = document_name.split()
+        for word in word_document_name:
+            if word.capitalize() in glossary_list:
+                word_list.append(word)
+            else:
+                pass
+        
+        for glossary_word in word_list:
+            title_word_entity = self.createTitleWordsEntity(document_entity=wiki_doc_item, title_word=glossary_word, lang=language_code)
+            title_word_entity.get()
+
         with open(filePath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
             line_count = 1

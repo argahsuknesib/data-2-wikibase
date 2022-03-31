@@ -4,7 +4,7 @@ from glossaryList import WordList
 glossary_list = WordList()
 
 word_list = []
-filePath = 'data/Black-Disability/White Privilege & Inspiration Porn by Vilissa Thompson.csv'
+filePath = 'data/Black-Disability/CSV/Work in the INtersection- A Black Feminist Disability Framework by Moya Bailey and Izetta Autumn Mobley.csv'
 fileName = ntpath.basename(filePath)[0:-4]
 words_fileName = fileName.split()
 for word in words_fileName:
@@ -13,4 +13,5 @@ for word in words_fileName:
     else:
         pass
 
-print(word_list)
+for value in word_list:
+    print(value)
